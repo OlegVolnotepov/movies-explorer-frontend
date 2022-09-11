@@ -1,0 +1,12 @@
+.navtab {
+  height: 66px;
+  background-color: #272727;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 40px;
+}
+
+.navtab__navlink {
+  color: white;
+}
