@@ -1,20 +1,19 @@
 .header {
   height: 74px;
-  max-width: 100vw;
+  max-width: 1140px;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  margin: auto;
 }
 
 .header__logo {
   width: 34px;
   height: 34px;
   background-size: cover;
-  margin-left: 70px;
 }
 
 .header__right-block {
-  margin-right: 70px;
 }
 
 .header__login-btn {
