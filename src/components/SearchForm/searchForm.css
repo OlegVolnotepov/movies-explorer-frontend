@@ -1,0 +1,131 @@
+.searchForm {
+  margin-top: 70px;
+  max-width: 1140px;
+  height: 72px;
+  border-radius: 9px;
+  background-color: #2f2f2f;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.searchForm__container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.searchForm__checkbox-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 230px;
+  border-left: 2px solid #424242;
+  height: 40px;
+  margin-left: 30px;
+}
+
+.searchForm__switch {
+  position: relative;
+  display: inline-block;
+  width: 36px;
+  height: 20px;
+  margin-left: 30px;
+}
+
+/* Скрыть флажок HTML по умолчанию */
+.searchForm__switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+/* Ползунок */
+.searchForm__slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #202020;
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
+}
+
+.searchForm__slider:before {
+  position: absolute;
+  content: "";
+  height: 20px;
+  width: 20px;
+  left: 0px;
+  bottom: 0px;
+  background-color: white;
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
+}
+
+input:checked + .searchForm__slider {
+  background-color: #2be080;
+}
+
+input:focus + .searchForm__slider {
+  box-shadow: 0 0 1px #2be080;
+}
+
+input:checked + .searchForm__slider:before {
+  -webkit-transform: translateX(16px);
+  -ms-transform: translateX(16px);
+  transform: translateX(16px);
+}
+
+/* Закругленные ползунки */
+.searchForm__slider.round {
+  border-radius: 34px;
+}
+
+.searchForm__slider.round:before {
+  border-radius: 50%;
+}
+
+.searchForm__input {
+  all: unset;
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 20px;
+  color: #8b8b8b;
+  width: 100%;
+}
+
+.searchForm__button {
+  all: unset;
+  width: 34px;
+  height: 34px;
+  background-image: url("../../images/blueSearchIcon.svg");
+  background-repeat: round;
+}
+
+.searchForm__icon {
+  margin-left: 19px;
+  margin-right: 10px;
+}
+
+.searchForm__text {
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 13px;
+  line-height: 18px;
+  color: #ffffff;
+  margin-right: 30px;
+  margin-left: 14px;
+}
+
+.searchForm__line {
+  max-width: 1140px;
+  border-bottom: 1px solid #424242;
+  margin-top: 70px;
+}
