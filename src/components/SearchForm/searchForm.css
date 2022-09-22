@@ -1,4 +1,5 @@
 .searchForm {
+  margin: auto;
   margin-top: 70px;
   max-width: 1140px;
   height: 72px;
@@ -125,6 +126,7 @@ input:checked + .searchForm__slider:before {
 }
 
 .searchForm__line {
+  margin: auto;
   max-width: 1140px;
   border-bottom: 1px solid #424242;
   margin-top: 70px;

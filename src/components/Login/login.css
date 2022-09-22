@@ -1,0 +1,113 @@
+* {
+  margin: 0;
+}
+
+.login {
+  background-color: #202020;
+  margin: 0 auto;
+}
+
+.login__header {
+  max-width: 396px;
+  margin: 0 auto;
+}
+
+.login__form {
+  margin: 0 auto;
+  max-width: 396px;
+  width: 100%;
+}
+
+.login__title {
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 24px;
+  line-height: 29px;
+  color: #ffffff;
+  margin-top: 40px;
+  margin-bottom: 40px;
+}
+
+.login__logo {
+  margin-top: 70px;
+}
+
+.login__text {
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 10px;
+  line-height: 12px;
+  color: #8b8b8b;
+  margin-bottom: 16px;
+  display: block;
+}
+
+.login__input {
+  background-color: inherit;
+  border: 0;
+  display: block;
+  border-bottom: 1px solid #424242;
+  width: 100%;
+  color: white;
+  padding-bottom: 5px;
+  outline: none;
+}
+
+.login__input:focus {
+  border-bottom: 1px solid #4285f4;
+}
+
+.login__error {
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 10px;
+  line-height: 12px;
+  color: #ee3465;
+}
+
+.login__submit {
+  width: 396px;
+  height: 45px;
+  background: #4285f4;
+  border-radius: 3px;
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 17px;
+  text-align: center;
+  color: #ffffff;
+  margin-top: 135px;
+  border: 0;
+}
+
+.login__question-block {
+  margin: 0 auto;
+  margin-top: 16px;
+  width: 396px;
+  text-align: center;
+}
+
+.login__login {
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 17px;
+  text-align: center;
+  color: #4285f4;
+}
+
+.login__question-text {
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 17px;
+  text-align: center;
+  color: #8b8b8b;
+  display: inline-block;
+}

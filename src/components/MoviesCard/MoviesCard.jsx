@@ -1,7 +1,8 @@
 import React from "react";
 import "./moviesCard.css";
 
-export const MoviesCard = ({ film }) => {
+export const MoviesCard = ({ film, type }) => {
+  const pageType = type.type;
   const { title, length, img } = film;
   return (
     <div className="moviesCard">
@@ -12,7 +13,14 @@ export const MoviesCard = ({ film }) => {
           <p className="moviesCard__length">{length}</p>
         </div>
         <div className="moviesCard__button-container">
-          <button type="button" className="moviesCard__button" />
+          <button
+            type="button"
+            className={
+              pageType == "saved"
+                ? "moviesCard__button-close"
+                : "moviesCard__button"
+            }
+          />
         </div>
       </div>
     </div>

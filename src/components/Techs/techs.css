@@ -17,6 +17,13 @@
   padding-top: 110px;
 }
 
+@media screen and (max-width: 1200px) {
+  .techs__header {
+    margin-left: 50px;
+    margin-right: 50px;
+  }
+}
+
 .techs__title {
   margin: 0;
   font-family: "Inter";
@@ -51,6 +58,7 @@
   align-items: center;
   gap: 10px;
   padding-bottom: 110px;
+  flex-wrap: wrap;
 }
 
 .techs__techs-item {
@@ -61,4 +69,11 @@
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+@media screen and (max-width: 769px) {
+  .techs__techs-item {
+    width: 84px;
+    height: 57px;
+  }
 }

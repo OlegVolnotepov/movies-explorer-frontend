@@ -3,6 +3,13 @@
   max-width: 1140px;
 }
 
+@media screen and (max-width: 1200px) {
+  .aboutProject {
+    margin-left: 50px;
+    margin-right: 50px;
+  }
+}
+
 .aboutProject__title {
   font-family: "Inter";
   font-style: normal;
@@ -44,6 +51,7 @@
   font-size: 14px;
   line-height: 20px;
   color: #ffffff;
+  margin-top: 26px;
 }
 
 .aboutProject__progress {
@@ -80,6 +88,7 @@
   line-height: 17px;
   text-align: center;
   color: #8b8b8b;
+  margin-top: 14px;
 }
 
 .aboutProject__progress-block {

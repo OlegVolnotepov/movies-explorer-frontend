@@ -1,6 +1,8 @@
 .aboutMe {
   color: white;
   background-color: #202020;
+  max-width: 1140px;
+  margin: 0 auto;
 }
 
 .aboutMe__header {

@@ -61,6 +61,15 @@
   border: 2px solid white;
 }
 
+.moviesCard__button-close {
+  width: 16px;
+  height: 16px;
+  background-color: inherit;
+  border: 0;
+  cursor: pointer;
+  background-image: url("../../images/delIcon.svg");
+}
+
 .moviesCard__button_active {
   background-color: #2be080;
 }

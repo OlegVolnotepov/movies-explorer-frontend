@@ -6,3 +6,23 @@
   gap: 20px;
   padding-top: 70px;
 }
+
+.moviesCardList__button {
+  all: unset;
+  margin: 0 auto;
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 15px;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  color: #ffffff;
+  width: 320px;
+  height: 36px;
+  background-color: #2f2f2f;
+  justify-content: center;
+  border-radius: 6px;
+  margin-top: 80px;
+}
