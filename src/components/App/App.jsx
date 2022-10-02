@@ -12,14 +12,14 @@ import { Profile } from "../Profile/Profile";
 
 function App() {
   return (
-    <LoggedStateContext.Provider value={true}>
+    <LoggedStateContext.Provider value={false}>
       <div className="App">
         <Routes>
           <Route path="/" element={<Layout />}>
             <Route index element={<Main />} />
             <Route path="/movies" element={<Movies />} />
-            <Route path="/register" element={<Register />} />
-            <Route path="/login" element={<Login />} />
+            <Route path="/signup" element={<Register />} />
+            <Route path="/signin" element={<Login />} />
             <Route path="/saved-movies" element={<SavedMovies />} />
             <Route path="/profile" element={<Profile />} />
             <Route path="*" element={<NotFound />} />

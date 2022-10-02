@@ -1,4 +1,11 @@
 .header {
+}
+
+.header__main {
+  background-color: #073042;
+}
+
+.header__wrapper {
   height: 74px;
   max-width: 1140px;
   display: flex;
@@ -8,9 +15,16 @@
 }
 
 @media screen and (max-width: 1200px) {
-  .header {
+  .header__wrapper {
     margin-left: 30px;
     margin-right: 30px;
+  }
+}
+
+@media screen and (max-width: 400px) {
+  .header__wrapper {
+    margin-left: 14px;
+    margin-right: 14px;
   }
 }
 
@@ -41,6 +55,13 @@
   line-height: 16px;
 }
 
+@media screen and (max-width: 400px) {
+  .header__login-btn {
+    width: 54px;
+    height: 26px;
+  }
+}
+
 .header__register {
   color: white;
   text-decoration: none;
@@ -49,6 +70,16 @@
   align-items: center;
   justify-content: center;
   gap: 13px;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 16px;
+}
+
+@media screen and (max-width: 400px) {
+  .header__register {
+    margin-right: 14px;
+  }
 }
 
 .header__center-block {
@@ -58,7 +89,6 @@
 }
 
 .header__movies-link {
-  font-family: "Inter";
   font-style: normal;
   font-weight: 500;
   font-size: 13px;
@@ -70,7 +100,6 @@
 }
 
 .header__title {
-  font-family: "Inter";
   font-style: normal;
   font-weight: 400;
   font-size: 13px;

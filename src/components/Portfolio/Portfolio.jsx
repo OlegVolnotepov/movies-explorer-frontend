@@ -10,19 +10,19 @@ export const Portfolio = () => {
         <a href="#" className="portfolio__link">
           Статичный сайт
         </a>
-        <img src={linkIcon} />
+        <img className="portfolio__img" src={linkIcon} />
       </div>
       <div className="portfolio__item">
         <a href="#" className="portfolio__link">
           Адаптивный сайт
         </a>
-        <img src={linkIcon} />
+        <img className="portfolio__img" src={linkIcon} />
       </div>
       <div className="portfolio__item">
         <a href="#" className="portfolio__link">
           Одностраничное приложение
         </a>
-        <img src={linkIcon} />
+        <img className="portfolio__img" src={linkIcon} />
       </div>
     </section>
   );

@@ -9,4 +9,16 @@
 
 .navtab__navlink {
   color: white;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 13px;
+  line-height: 16px;
+}
+
+@media screen and (max-width: 400px) {
+  .navtab__navlink {
+    font-weight: 500;
+    font-size: 11px;
+    line-height: 16px;
+  }
 }
