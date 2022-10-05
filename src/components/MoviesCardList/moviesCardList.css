@@ -7,10 +7,15 @@
   padding-top: 70px;
 }
 
+@media screen and (max-width: 768px) {
+  .moviesCardList {
+    gap: 30px;
+  }
+}
+
 .moviesCardList__button {
   all: unset;
   margin: 0 auto;
-  font-family: "Inter";
   font-style: normal;
   font-weight: 500;
   font-size: 12px;
@@ -25,4 +30,11 @@
   justify-content: center;
   border-radius: 6px;
   margin-top: 80px;
+}
+
+@media screen and (max-width: 500px) {
+  .moviesCardList__button {
+    width: 240px;
+    margin-top: 50px;
+  }
 }

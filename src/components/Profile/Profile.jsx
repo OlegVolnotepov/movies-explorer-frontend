@@ -1,8 +1,13 @@
 import React from "react";
 import "./profile.css";
 import { Link } from "react-router-dom";
+import { LoggedStateContext } from "../../contexts/LoggedStateContext";
 
 export const Profile = () => {
+  const isLogged = React.useContext(LoggedStateContext);
+  React.useEffect(() => {
+    isLogged.setIsLogged(true);
+  }, []);
   return (
     <section className="profile">
       <h1 className="profile__title">Привет, Андрей</h1>
