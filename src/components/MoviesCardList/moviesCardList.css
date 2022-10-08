@@ -5,11 +5,18 @@
   flex-wrap: wrap;
   gap: 20px;
   padding-top: 70px;
+  justify-content: space-between;
 }
 
 @media screen and (max-width: 768px) {
   .moviesCardList {
     gap: 30px;
+  }
+}
+
+@media screen and (max-width: 667px) {
+  .moviesCardList {
+    gap: 15px;
   }
 }
 

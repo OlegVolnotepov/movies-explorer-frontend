@@ -1,9 +1,17 @@
 import React from "react";
 import "./searchForm.css";
 import darkSearchIcon from "../../images/darkSearchIcon.svg";
+import { useState } from "react";
+import { useEffect } from "react";
 
 export const SearchForm = () => {
-  const screenWidth = window.screen.width;
+  const [screenWidth, setScreenWidth] = useState(window.screen.width);
+  function handleResize() {
+    setScreenWidth(window.screen.width);
+  }
+
+  window.addEventListener("resize", handleResize);
+
   return (
     <>
       {screenWidth > 500 ? (

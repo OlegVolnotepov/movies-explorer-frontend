@@ -7,6 +7,13 @@
   margin: 0 auto;
 }
 
+@media screen and (max-width: 400px) {
+  .register {
+    margin-right: 10px;
+    margin-left: 10px;
+  }
+}
+
 .register__header {
   max-width: 396px;
   margin: 0 auto;
@@ -19,7 +26,6 @@
 }
 
 .register__title {
-  font-family: "Inter";
   font-style: normal;
   font-weight: 500;
   font-size: 24px;
@@ -29,12 +35,25 @@
   margin-bottom: 40px;
 }
 
+@media screen and (max-width: 400px) {
+  .register__title {
+    text-align: center;
+  }
+}
+
 .register__logo {
   margin-top: 70px;
 }
 
+@media screen and (max-width: 400px) {
+  .register__logo {
+    display: block;
+    margin: auto;
+    padding-top: 56px;
+  }
+}
+
 .register__text {
-  font-family: "Inter";
   font-style: normal;
   font-weight: 400;
   font-size: 10px;
@@ -60,7 +79,6 @@
 }
 
 .register__error {
-  font-family: "Inter";
   font-style: normal;
   font-weight: 400;
   font-size: 10px;
@@ -69,11 +87,12 @@
 }
 
 .register__submit {
+  display: block;
+  margin: auto;
   width: 396px;
   height: 45px;
   background: #4285f4;
   border-radius: 3px;
-  font-family: "Inter";
   font-style: normal;
   font-weight: 500;
   font-size: 14px;
@@ -84,15 +103,36 @@
   border: 0;
 }
 
+@media screen and (max-width: 400px) {
+  .register__submit {
+    width: 260px;
+    display: block;
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 60px;
+  }
+}
+
 .register__question-block {
   margin: 0 auto;
   margin-top: 16px;
-  width: 396px;
   text-align: center;
 }
 
+@media screen and (max-width: 400px) {
+  .register__question-block {
+    font-size: 12px;
+    line-height: 15px;
+    width: 100%;
+    position: absolute;
+    bottom: 30px;
+    left: 0;
+    right: 0;
+  }
+}
+
 .register__login {
-  font-family: "Inter";
   font-style: normal;
   font-weight: 400;
   font-size: 14px;
@@ -101,8 +141,14 @@
   color: #4285f4;
 }
 
+@media screen and (max-width: 400px) {
+  .register__login {
+    font-size: 12px;
+    text-decoration: none;
+  }
+}
+
 .register__question-text {
-  font-family: "Inter";
   font-style: normal;
   font-weight: 400;
   font-size: 14px;
@@ -110,4 +156,11 @@
   text-align: center;
   color: #8b8b8b;
   display: inline-block;
+}
+
+@media screen and (max-width: 400px) {
+  .register__question-text {
+    font-size: 12px;
+    line-height: 15px;
+  }
 }

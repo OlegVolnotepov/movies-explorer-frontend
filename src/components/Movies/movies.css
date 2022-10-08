@@ -4,6 +4,13 @@
   max-width: 1140px;
 }
 
+@media screen and (max-width: 1200px) {
+  .movies {
+    margin-left: 30px;
+    margin-right: 30px;
+  }
+}
+
 @media screen and (max-width: 768px) {
   .movies {
     margin-left: 30px;

@@ -9,7 +9,12 @@ import { useEffect, useState } from "react";
 
 export const Header = () => {
   const isLogged = React.useContext(LoggedStateContext);
-  const screenWidth = window.screen.width;
+  const [screenWidth, setScreenWidth] = useState(window.screen.width);
+  function handleResize() {
+    setScreenWidth(window.screen.width);
+  }
+
+  window.addEventListener("resize", handleResize);
   let location = useLocation();
   const [isMenuOpen, setisMenuOpen] = useState(false);
   function openMenu() {

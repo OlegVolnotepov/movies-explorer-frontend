@@ -12,7 +12,9 @@ export const Layout = () => {
   return (
     <div className="layout">
       {!forbiddenLink.includes(location.pathname) && <Header />}
-      <Outlet />
+      <main>
+        <Outlet />
+      </main>
       {!forbiddenLink.includes(location.pathname) && <Footer />}
     </div>
   );

@@ -10,9 +10,9 @@ export const SavedMovies = () => {
     isLogged.setIsLogged(true);
   }, []);
   return (
-    <div className="savedMovies">
+    <section className="savedMovies">
       <SearchForm />
       <MoviesCardList type="saved" />
-    </div>
+    </section>
   );
 };

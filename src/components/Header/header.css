@@ -52,6 +52,7 @@
   font-weight: 500;
   font-size: 12px;
   line-height: 16px;
+  color: black;
 }
 
 @media screen and (max-width: 400px) {

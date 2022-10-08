@@ -9,6 +9,14 @@
   background-position: center;
 }
 
+@media screen and (max-width: 400px) {
+  .promo {
+    background-image: url("../../images/promo-mob.svg");
+    height: 490px;
+    display: block;
+  }
+}
+
 .promo__title {
   margin: 0;
   display: block;
@@ -29,5 +37,6 @@
     line-height: 39px;
     text-align: center;
     letter-spacing: -0.04em;
+    padding-top: 128px;
   }
 }

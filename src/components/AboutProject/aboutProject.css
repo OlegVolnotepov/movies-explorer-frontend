@@ -61,6 +61,13 @@
 .aboutProject__wrapper {
   display: flex;
   margin-top: 50px;
+  gap: 40px;
+}
+
+@media screen and (max-width: 400px) {
+  .aboutProject__wrapper {
+    margin-top: 60px;
+  }
 }
 
 @media screen and (max-width: 400px) {

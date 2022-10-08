@@ -9,13 +9,26 @@
   background-color: #222222;
   box-shadow: 0px 16px 24px rgba(0, 0, 0, 0.05);
   border-radius: 10px;
+  flex-grow: 1;
 }
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 767px) {
   .moviesCard {
-    max-width: 339px;
+    max-width: 288px;
     height: 257px;
     width: 100%;
+  }
+}
+
+@media screen and (max-width: 667px) {
+  .moviesCard {
+    max-width: 247px;
+  }
+}
+
+@media screen and (max-width: 570px) {
+  .moviesCard {
+    max-width: 570px;
   }
 }
 
@@ -31,6 +44,8 @@
   border-top-right-radius: 13px;
   border-top-left-radius: 13px;
   background-color: #222222;
+  margin: auto;
+  display: block;
 }
 
 @media screen and (max-width: 768px) {

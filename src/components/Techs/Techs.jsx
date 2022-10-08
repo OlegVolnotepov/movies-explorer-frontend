@@ -5,7 +5,7 @@ export const Techs = () => {
   return (
     <section className="techs">
       <h2 className="techs__header">Технологии</h2>
-      <div>
+      <div className="techs__wrapper">
         <h3 className="techs__title">7 технологий</h3>
         <p className="techs__text">
           На курсе веб-разработки мы освоили технологии, которые применили в

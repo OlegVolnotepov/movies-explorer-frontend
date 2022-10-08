@@ -10,10 +10,16 @@ export const Footer = () => {
       <div className="footer__wrapper">
         <div className="footer__text">© 2022</div>
         <div className="footer__right-container">
-          <a href="#" className="footer__text footer__link">
+          <a
+            href="https://practicum.yandex.ru"
+            className="footer__text footer__link"
+          >
             Яндекс.Практикум
           </a>
-          <a href="#" className="footer__text footer__link">
+          <a
+            href="https://github.com/OlegVolnotepov"
+            className="footer__text footer__link"
+          >
             Github
           </a>
         </div>
