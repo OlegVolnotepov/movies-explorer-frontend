@@ -7,7 +7,6 @@ const forbiddenLink = ["/404", "/signin", "/signup"];
 
 export const Layout = () => {
   let location = useLocation();
-  console.log(forbiddenLink.includes(location.pathname));
 
   return (
     <div className="layout">

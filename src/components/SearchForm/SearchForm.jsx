@@ -4,10 +4,21 @@ import darkSearchIcon from "../../images/darkSearchIcon.svg";
 import { useState } from "react";
 import { useEffect } from "react";
 
-export const SearchForm = () => {
+export const SearchForm = ({ getMovies }) => {
+  const [searchValue, setSearchValue] = useState("");
   const [screenWidth, setScreenWidth] = useState(window.screen.width);
   function handleResize() {
     setScreenWidth(window.screen.width);
+  }
+
+  function handleChangeValue(e) {
+    setSearchValue(e.target.value);
+  }
+
+  function submitForm(event) {
+    event.preventDefault();
+    getMovies(searchValue);
+    setSearchValue("");
   }
 
   window.addEventListener("resize", handleResize);
@@ -15,14 +26,15 @@ export const SearchForm = () => {
   return (
     <>
       {screenWidth > 500 ? (
-        <form className="searchForm">
+        <form className="searchForm" onSubmit={submitForm}>
           <div className="searchForm__container">
             <img src={darkSearchIcon} className="searchForm__icon" />
             <input
               className="searchForm__input"
               placeholder="Фильм"
               type="text"
-              value=""
+              value={searchValue || ""}
+              onChange={handleChangeValue}
               required
             />
             <button type="submit" className="searchForm__button"></button>
