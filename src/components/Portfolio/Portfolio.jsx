@@ -14,7 +14,11 @@ export const Portfolio = () => {
         rel="noreferrer"
       >
         <p className="portfolio__link">Статичный сайт</p>
-        <img className="portfolio__img" src={linkIcon} />
+        <img
+          className="portfolio__img"
+          src={linkIcon}
+          alt="ссылка на работу в гитхабе."
+        />
       </a>
       <a
         target="_blank"
@@ -23,7 +27,11 @@ export const Portfolio = () => {
         rel="noreferrer"
       >
         <p className="portfolio__link">Адаптивный сайт</p>
-        <img className="portfolio__img" src={linkIcon} />
+        <img
+          alt="ссылка на работу в гитхабе."
+          className="portfolio__img"
+          src={linkIcon}
+        />
       </a>
       <a
         target="_blank"
@@ -32,7 +40,11 @@ export const Portfolio = () => {
         rel="noreferrer"
       >
         <p className="portfolio__link">Одностраничное приложение</p>
-        <img className="portfolio__img" src={linkIcon} />
+        <img
+          alt="ссылка на работу в гитхабе."
+          className="portfolio__img"
+          src={linkIcon}
+        />
       </a>
     </section>
   );

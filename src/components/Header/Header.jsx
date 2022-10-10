@@ -9,9 +9,11 @@ import { useEffect, useState } from "react";
 
 export const Header = () => {
   const isLogged = React.useContext(LoggedStateContext);
-  const [screenWidth, setScreenWidth] = useState(window.screen.width);
+  const [screenWidth, setScreenWidth] = useState(
+    document.documentElement.scrollWidth
+  );
   function handleResize() {
-    setScreenWidth(window.screen.width);
+    setScreenWidth(document.documentElement.scrollWidth);
   }
 
   window.addEventListener("resize", handleResize);
@@ -46,7 +48,11 @@ export const Header = () => {
                 <div className="header__right-block">
                   <Link to="/profile" className="header__register">
                     <span>Аккаунт</span>
-                    <img src={accIcon} className="header__accIcon" />
+                    <img
+                      src={accIcon}
+                      className="header__accIcon"
+                      alt="ссылка для редактирования аккаунта."
+                    />
                   </Link>
                 </div>
               </>

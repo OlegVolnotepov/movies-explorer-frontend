@@ -103,6 +103,7 @@
 @media screen and (max-width: 1200px) {
   .aboutMe__text {
     max-width: 364px;
+    margin-right: 10px;
   }
 }
 
@@ -117,12 +118,12 @@
 .aboutMe__img {
   max-width: 270px;
   height: 100%;
+  width: 100%;
 }
 
 @media screen and (max-width: 1200px) {
   .aboutMe__img {
     margin: auto;
-    max-width: 292px;
   }
 }
 

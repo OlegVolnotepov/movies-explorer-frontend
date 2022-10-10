@@ -6,7 +6,9 @@ export const MoviesCard = ({ film, type }) => {
   const { title, length, img } = film;
   return (
     <div className="moviesCard">
-      <img className="moviesCard__img" src={img} />
+      <div className="moviesCard__img-container">
+        <img className="moviesCard__img" src={img} />
+      </div>
       <div className="moviesCard__botton-container">
         <div className="moviesCard__description">
           <p className="moviesCard__title">{title}</p>

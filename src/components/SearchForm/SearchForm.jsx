@@ -5,9 +5,11 @@ import { useState } from "react";
 import { useEffect } from "react";
 
 export const SearchForm = () => {
-  const [screenWidth, setScreenWidth] = useState(window.screen.width);
+  const [screenWidth, setScreenWidth] = useState(
+    document.documentElement.scrollWidth
+  );
   function handleResize() {
-    setScreenWidth(window.screen.width);
+    setScreenWidth(document.documentElement.scrollWidth);
   }
 
   window.addEventListener("resize", handleResize);
@@ -39,7 +41,11 @@ export const SearchForm = () => {
         <>
           <form className="searchForm">
             <div className="searchForm__container">
-              <img src={darkSearchIcon} className="searchForm__icon" />
+              <img
+                alt="иконка поиска."
+                src={darkSearchIcon}
+                className="searchForm__icon"
+              />
               <input
                 className="searchForm__input"
                 placeholder="Фильм"
