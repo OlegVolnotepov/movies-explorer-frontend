@@ -43,7 +43,12 @@ export const MenuPopup = ({ location, isMenuOpen, closeMenu }) => {
         </ul>
         <div className="menuPopup__bottom-wrapper">
           <NavLink className="menuPopup__link menuPopup__acc" to="/profile">
-            Аккаунт<img className="menuPopup__accIcon" src={accIcon}></img>
+            Аккаунт
+            <img
+              className="menuPopup__accIcon"
+              src={accIcon}
+              alt="ссылка для редактирования аккаунта."
+            ></img>
           </NavLink>
         </div>
       </div>

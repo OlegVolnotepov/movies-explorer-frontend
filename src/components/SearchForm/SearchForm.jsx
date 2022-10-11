@@ -51,7 +51,11 @@ export const SearchForm = ({ getMovies }) => {
         <>
           <form className="searchForm">
             <div className="searchForm__container">
-              <img src={darkSearchIcon} className="searchForm__icon" />
+              <img
+                alt="иконка поиска."
+                src={darkSearchIcon}
+                className="searchForm__icon"
+              />
               <input
                 className="searchForm__input"
                 placeholder="Фильм"
