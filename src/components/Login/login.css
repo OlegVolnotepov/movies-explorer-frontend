@@ -1,0 +1,166 @@
+* {
+  margin: 0;
+}
+
+.login {
+  background-color: #202020;
+  margin: 0 auto;
+}
+
+@media screen and (max-width: 400px) {
+  .login {
+    margin-right: 10px;
+    margin-left: 10px;
+  }
+}
+
+.login__header {
+  max-width: 396px;
+  margin: 0 auto;
+}
+
+.login__form {
+  margin: 0 auto;
+  max-width: 396px;
+  width: 100%;
+}
+
+.login__title {
+  font-style: normal;
+  font-weight: 500;
+  font-size: 24px;
+  line-height: 29px;
+  color: #ffffff;
+  margin-top: 40px;
+  margin-bottom: 40px;
+}
+
+@media screen and (max-width: 400px) {
+  .login__title {
+    text-align: center;
+  }
+}
+
+.login__logo {
+  margin-top: 70px;
+}
+
+@media screen and (max-width: 400px) {
+  .login__logo {
+    display: block;
+    margin: auto;
+    padding-top: 56px;
+  }
+}
+
+.login__text {
+  font-style: normal;
+  font-weight: 400;
+  font-size: 10px;
+  line-height: 12px;
+  color: #8b8b8b;
+  margin-bottom: 16px;
+  display: block;
+}
+
+.login__input {
+  background-color: inherit;
+  border: 0;
+  display: block;
+  border-bottom: 1px solid #424242;
+  width: 100%;
+  color: white;
+  padding-bottom: 5px;
+  outline: none;
+}
+
+.login__input:focus {
+  border-bottom: 1px solid #4285f4;
+}
+
+.login__error {
+  font-style: normal;
+  font-weight: 400;
+  font-size: 10px;
+  line-height: 12px;
+  color: #ee3465;
+}
+
+.login__submit {
+  margin: auto;
+  width: 396px;
+  height: 45px;
+  background: #4285f4;
+  border-radius: 3px;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 17px;
+  text-align: center;
+  color: #ffffff;
+  margin-top: 135px;
+  border: 0;
+}
+
+@media screen and (max-width: 400px) {
+  .login__submit {
+    width: 260px;
+    display: block;
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 60px;
+  }
+}
+
+.login__question-block {
+  margin: 0 auto;
+  margin-top: 16px;
+  width: 396px;
+  text-align: center;
+}
+
+@media screen and (max-width: 400px) {
+  .login__question-block {
+    font-size: 12px;
+    line-height: 15px;
+    width: 100%;
+    position: absolute;
+    bottom: 30px;
+    left: 0;
+    right: 0;
+  }
+}
+
+.login__login {
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 17px;
+  text-align: center;
+  color: #4285f4;
+  text-decoration: none;
+}
+
+@media screen and (max-width: 400px) {
+  .login__login {
+    font-size: 12px;
+  }
+}
+
+.login__question-text {
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 17px;
+  text-align: center;
+  color: #8b8b8b;
+  display: inline-block;
+}
+
+@media screen and (max-width: 400px) {
+  .login__question-text {
+    font-size: 12px;
+    line-height: 15px;
+  }
+}
