@@ -1,41 +1,34 @@
 import React from "react";
 import { MoviesCard } from "../MoviesCard/MoviesCard";
 import "./moviesCardList.css";
-import film1Img from "../../images/film1.jpg";
-import film2Img from "../../images/film2.jpg";
 import { Preloader } from "../Preloader/Preloader";
+import { AnotherResult } from "../AnotherResult/AnotherResult";
+import { MoreButton } from "../MoreButton/MoreButton";
 
-const movies = [
-  { title: "Film1", length: "1.42", img: film1Img },
-  { title: "Film2", length: "0.42", img: film1Img },
-  { title: "Film3", length: "1.42", img: film2Img },
-  { title: "Film4", length: "1.42", img: film2Img },
-  { title: "Film1", length: "1.42", img: film1Img },
-  { title: "Film2", length: "0.42", img: film1Img },
-  { title: "Film3", length: "1.42", img: film2Img },
-  { title: "Film4", length: "1.42", img: film2Img },
-  { title: "Film1", length: "1.42", img: film1Img },
-  { title: "Film2", length: "0.42", img: film1Img },
-  { title: "Film3", length: "1.42", img: film2Img },
-  { title: "Film4", length: "1.42", img: film2Img },
-  { title: "Film1", length: "1.42", img: film1Img },
-  { title: "Film2", length: "0.42", img: film1Img },
-  { title: "Film3", length: "1.42", img: film2Img },
-  { title: "Film4", length: "1.42", img: film2Img },
-];
-
-// export const MoviesCardList = (type) => {
-//   return (
-//     <section className="moviesCardList">
-//       {movies.map((film, index) => {
-//         return <MoviesCard key={index} film={film} type={type} />;
-//       })}
-//       <button type="button" className="moviesCardList__button">
-//         Еще
-//       </button>
-//     </section>
-//   );
-// };
-export const MoviesCardList = ({ type, preloading }) => {
-  return <>{preloading ? <Preloader /> : ""}</>;
+export const MoviesCardList = ({
+  type,
+  preloading,
+  films,
+  anotherResult,
+  increaseFilms,
+  isDisplayButton,
+}) => {
+  return (
+    <>
+      {preloading ? (
+        <Preloader />
+      ) : anotherResult !== "" ? (
+        <AnotherResult type={anotherResult} />
+      ) : (
+        <>
+          <section className="moviesCardList">
+            {films.map((film, index) => {
+              return <MoviesCard key={index} film={film} type={type} />;
+            })}
+          </section>
+          {isDisplayButton && <MoreButton increaseFilms={increaseFilms} />}
+        </>
+      )}
+    </>
+  );
 };

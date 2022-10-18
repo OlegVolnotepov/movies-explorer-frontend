@@ -1,26 +1,4 @@
-.moviesCardList {
-  margin: 0 auto;
-  max-width: 1140px;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 20px;
-  padding-top: 70px;
-}
-
-@media screen and (max-width: 768px) {
-  .moviesCardList {
-    gap: 30px;
-    justify-content: space-between;
-  }
-}
-
-@media screen and (max-width: 667px) {
-  .moviesCardList {
-    gap: 15px;
-  }
-}
-
-.moviesCardList__button {
+.moreButton {
   all: unset;
   margin: 0 auto;
   font-style: normal;
@@ -37,10 +15,15 @@
   justify-content: center;
   border-radius: 6px;
   margin-top: 80px;
+  cursor: pointer;
+}
+
+.moreButton:hover {
+  background-color: #444343;
 }
 
 @media screen and (max-width: 500px) {
-  .moviesCardList__button {
+  .moreButton {
     width: 240px;
     margin-top: 50px;
   }

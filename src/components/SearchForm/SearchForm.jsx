@@ -18,7 +18,6 @@ export const SearchForm = ({ getMovies }) => {
   function submitForm(event) {
     event.preventDefault();
     getMovies(searchValue);
-    setSearchValue("");
   }
 
   window.addEventListener("resize", handleResize);
@@ -40,9 +39,9 @@ export const SearchForm = ({ getMovies }) => {
             <button type="submit" className="searchForm__button"></button>
           </div>
           <div className="searchForm__checkbox-container">
-            <label class="searchForm__switch">
+            <label className="searchForm__switch">
               <input type="checkbox" />
-              <span class="searchForm__slider round"></span>
+              <span className="searchForm__slider round"></span>
             </label>
             <p className="searchForm__text">Короткометражки</p>
           </div>
@@ -70,9 +69,9 @@ export const SearchForm = ({ getMovies }) => {
             </div>
           </form>
           <div className="searchForm__checkbox-container_mobile">
-            <label class="searchForm__switch">
+            <label className="searchForm__switch">
               <input type="checkbox" />
-              <span class="searchForm__slider round"></span>
+              <span className="searchForm__slider round"></span>
             </label>
             <p className="searchForm__text">Короткометражки</p>
           </div>

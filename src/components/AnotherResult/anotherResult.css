@@ -1,0 +1,16 @@
+* {
+  margin: 0;
+  color: white;
+}
+
+.anotherResult {
+  max-width: 800px;
+  text-align: center;
+  margin: auto;
+  margin-top: 70px;
+}
+
+@media screen and (max-width: 500px) {
+  .anotherResult {
+  }
+}
