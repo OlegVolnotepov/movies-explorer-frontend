@@ -25,6 +25,13 @@ export const Movies = () => {
   const [screenWidth, setScreenWidth] = useState(
     document.documentElement.scrollWidth
   );
+  const [isShortFilm, setIsShortFilm] = useState(false);
+
+  const allFilms = JSON.parse(localStorage.getItem("films"));
+  const allFilmsShort = JSON.parse(localStorage.getItem("films")).filter(
+    (item) => item.duration <= 40
+  );
+
   function handleResize() {
     setScreenWidth(document.documentElement.scrollWidth);
   }
@@ -52,12 +59,11 @@ export const Movies = () => {
   }, [screenWidth]);
 
   function increaseFilms() {
-    setFilms(
-      JSON.parse(localStorage.getItem("films")).slice(
-        0,
-        films.length + uploadCount
-      )
-    );
+    if (isShortFilm) {
+      setFilms(allFilmsShort.slice(0, films.length + uploadCount));
+    } else {
+      setFilms(allFilms.slice(0, films.length + uploadCount));
+    }
   }
 
   function findMovies(movies) {
@@ -102,31 +108,99 @@ export const Movies = () => {
       });
   }
 
-  useEffect(() => {
-    const allFilms = JSON.parse(localStorage.getItem("films"));
-    setFilmsCount(allFilms.length);
-
-    if (allFilms.length > 0) {
-      setFilms(allFilms.slice(0, filmsLength));
+  function handleChangeShortFilms() {
+    if (localStorage.getItem("short") == "true") {
+      localStorage.setItem("short", false);
+      setIsShortFilm(!isShortFilm);
     } else {
-      setFilms(allFilms);
+      localStorage.setItem("short", true);
+      setIsShortFilm(!isShortFilm);
     }
+    //localStorage.setItem("short", true);
+    //setIsShortFilm(!isShortFilm);
+  }
+
+  //фильтруем Короткометражки
+  // useEffect(() => {
+  //   if (isShortFilm) {
+  //     loadFilms(allFilmsShort);
+  //   } else {
+  //     loadFilms(allFilms);
+  //   }
+  // }, [isShortFilm]);
+  useEffect(() => {
+    if (localStorage.getItem("short") == "true") {
+      loadFilms(allFilmsShort);
+    } else {
+      loadFilms(allFilms);
+    }
+  }, [isShortFilm]);
+
+  // function loadFilms(allFilms) {
+  //   if (isShortFilm) {
+  //     setFilmsCount(allFilmsShort.length);
+  //     if (allFilmsShort.length > 0) {
+  //       setFilms(allFilmsShort.slice(0, filmsLength));
+  //     } else {
+  //       setFilms(allFilmsShort);
+  //     }
+  //   } else {
+  //     setFilmsCount(allFilms.length);
+  //     if (allFilms.length > 0) {
+  //       setFilms(allFilms.slice(0, filmsLength));
+  //     } else {
+  //       setFilms(allFilms);
+  //     }
+  //   }
+  // }
+  function loadFilms(allFilms) {
+    if (localStorage.getItem("short") == "true") {
+      setFilmsCount(allFilmsShort.length);
+      if (allFilmsShort.length > 0) {
+        setFilms(allFilmsShort.slice(0, filmsLength));
+      } else {
+        setFilms(allFilmsShort);
+      }
+    } else {
+      setFilmsCount(allFilms.length);
+      if (allFilms.length > 0) {
+        setFilms(allFilms.slice(0, filmsLength));
+      } else {
+        setFilms(allFilms);
+      }
+    }
+  }
+
+  useEffect(() => {
+    loadFilms(allFilms);
   }, [filmsCount, preloading, filmsLength]);
 
   //Показ кнопки
   React.useEffect(() => {
-    const allFilmsCount = JSON.parse(localStorage.getItem("films")).length;
-    if (filmsLength < allFilmsCount) {
-      setIsDisplayButton(true);
+    if (isShortFilm) {
+      const allFilmsCount = allFilmsShort.length;
+      if (filmsLength < allFilmsCount) {
+        setIsDisplayButton(true);
+      } else {
+        setIsDisplayButton(false);
+      }
     } else {
-      setIsDisplayButton(false);
+      const allFilmsCount = allFilms.length;
+      if (filmsLength < allFilmsCount) {
+        setIsDisplayButton(true);
+      } else {
+        setIsDisplayButton(false);
+      }
     }
   }, [films.length, filmsLength]);
 
   return (
     <>
       <section className="movies">
-        <SearchForm getMovies={getMovies} />
+        <SearchForm
+          getMovies={getMovies}
+          handleChangeShortFilms={handleChangeShortFilms}
+        />
         <MoviesCardList
           increaseFilms={increaseFilms}
           preloading={preloading}

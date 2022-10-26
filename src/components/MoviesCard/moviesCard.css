@@ -77,10 +77,12 @@
   background-color: #313131;
   border: 2px solid white;
   cursor: pointer;
+  transition: 0.2s;
 }
 
 .moviesCard__button_active {
   background-color: #2be080;
+  transition: 0.2s;
 }
 
 .moviesCard__button-close {
