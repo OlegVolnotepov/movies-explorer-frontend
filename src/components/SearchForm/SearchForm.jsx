@@ -31,10 +31,7 @@ export const SearchForm = ({ getMovies, handleChangeShortFilms }) => {
   useEffect(() => {
     setIsCheked(localStorage.getItem("short"));
     setValue(localStorage.getItem("short") == "true" ? true : false);
-    //console.log(localStorage.getItem("short"));
-    //console.log(localStorage.getItem("short"));
   }, [isCheked, value]);
-  //console.log(isCheked);
 
   window.addEventListener("resize", handleResize);
 
@@ -54,17 +51,6 @@ export const SearchForm = ({ getMovies, handleChangeShortFilms }) => {
             />
             <button type="submit" className="searchForm__button"></button>
           </div>
-          {/* <div className="searchForm__checkbox-container">
-            <label className="searchForm__switch">
-              <input
-                checked={isCheked == "true" ? "checked" : ""}
-                type="checkbox"
-                onChange={handleCheck}
-              />
-              <span className="searchForm__slider round"></span>
-            </label>
-            <p className="searchForm__text">Короткометражки</p>
-          </div> */}
           <div className="searchForm__checkbox-container">
             <Switch isOn={value} handleToggle={handleCheck} />
             <p className="searchForm__text">Короткометражки</p>
