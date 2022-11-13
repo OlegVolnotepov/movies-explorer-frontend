@@ -2,8 +2,22 @@ import React from "react";
 import "./login.css";
 import logoImg from "../../images/logo.svg";
 import { Link } from "react-router-dom";
+import { useForm } from "react-hook-form";
+import { re } from "../../utils/constants";
 
-export const Login = () => {
+export const Login = ({ handleLogin }) => {
+  const {
+    register,
+    formState: { errors, isValid },
+    handleSubmit,
+    reset,
+  } = useForm({ mode: "onChange" });
+
+  function onSubmit(data) {
+    handleLogin(data);
+    reset();
+  }
+
   return (
     <section className="login">
       <div className="login__header">
@@ -13,19 +27,48 @@ export const Login = () => {
         <h1 className="login__title">Рады видеть!</h1>
       </div>
 
-      <form className="login__form">
+      <form
+        formNoValidate
+        className="login__form"
+        onSubmit={handleSubmit(onSubmit)}
+      >
         <label className="login__text">
           E-mail
-          <input type="email" className="login__input" />
-          <span className="login__error">error</span>
+          <input
+            {...register("email", {
+              required: "Укажите почту",
+              pattern: {
+                value: re,
+                message: "Неправильный формат почты",
+              },
+            })}
+            className="login__input"
+          />
+          {errors.email && (
+            <span className="login__error">{errors.email.message}</span>
+          )}
         </label>
         <label className="login__text">
           Пароль
-          <input type="password" className="login__input" />
-          <span className="login__error">error</span>
+          <input
+            {...register("password", {
+              required: "Укажите пароль",
+            })}
+            type="password"
+            className="login__input"
+          />
+          {errors.password && (
+            <span className="login__error">{errors.password.message}</span>
+          )}
         </label>
-        <button className="login__submit" type="submit">
-          Зарегистрироваться
+        <button
+          className={
+            !isValid ? "login__submit login__submit_disabled" : "login__submit"
+          }
+          disabled={!isValid}
+          type="submit"
+        >
+          Войти
         </button>
       </form>
       <div className="login__question-block">

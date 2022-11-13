@@ -69,6 +69,11 @@
   margin-top: 220px;
 }
 
+.profile__btn_disabled {
+  color: #828282;
+  cursor: default;
+}
+
 .profile__logout {
   margin: 0;
   font-style: normal;

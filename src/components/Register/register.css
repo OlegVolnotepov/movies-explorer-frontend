@@ -103,6 +103,10 @@
   border: 0;
 }
 
+.register__submit_disabled {
+  background: #7e8187;
+}
+
 @media screen and (max-width: 400px) {
   .register__submit {
     width: 260px;

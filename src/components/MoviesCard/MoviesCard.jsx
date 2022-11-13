@@ -4,12 +4,25 @@ import { BASE_URL } from "../../utils/constants";
 import { useEffect } from "react";
 import { useState } from "react";
 
-export const MoviesCard = ({ film, type }) => {
+export const MoviesCard = ({
+  film,
+  type,
+  handleAddMovie,
+  handleDeleteMovie,
+}) => {
   const [time, setTime] = useState("");
   const [active, setActive] = useState(false);
 
   function setActiveButton() {
-    setActive(!active);
+    //setActive(!active);
+    if (active) {
+      setActive(false);
+      handleDeleteMovie(film);
+    } else {
+      console.log("activate");
+      setActive(true);
+      handleAddMovie(film);
+    }
   }
 
   const pageType = type.type;
@@ -26,6 +39,7 @@ export const MoviesCard = ({ film, type }) => {
     created_at,
     updated_at,
     image,
+    _id,
   } = film;
 
   function getTimeFromMins(duration) {
@@ -37,16 +51,18 @@ export const MoviesCard = ({ film, type }) => {
 
   useEffect(() => getTimeFromMins(duration), []);
 
+  useEffect(() => {
+    if (_id) {
+      setActive(true);
+    }
+  }, []);
+
   return (
     <div className="moviesCard">
       <div className="moviesCard__img-container">
         <a href={trailerLink} target="_blank" rel="noreferrer">
           {" "}
-          <img
-            className="moviesCard__img"
-            src={`${BASE_URL.BEATFILM_MOVIES}${image.url}`}
-            alt="film"
-          />
+          <img className="moviesCard__img" src={image} alt="film" />
         </a>
       </div>
       <div className="moviesCard__botton-container">
@@ -59,11 +75,9 @@ export const MoviesCard = ({ film, type }) => {
             onClick={setActiveButton}
             type="button"
             className={
-              pageType == "saved"
-                ? "moviesCard__button-close"
-                : active
+              active
                 ? "moviesCard__button moviesCard__button_active"
-                : "moviesCard__button"
+                : "moviesCard__button "
             }
           />
         </div>
@@ -71,3 +85,11 @@ export const MoviesCard = ({ film, type }) => {
     </div>
   );
 };
+
+// className={
+//   pageType == "saved"
+//     ? "moviesCard__button-close"
+//     : active
+//     ? "moviesCard__button moviesCard__button_active"
+//     : "moviesCard__button"
+// }

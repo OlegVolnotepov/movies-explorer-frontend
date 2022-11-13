@@ -3,4 +3,7 @@ const BASE_URL = {
   MOVIES_EXPLORER: "",
 };
 
-export { BASE_URL };
+const re =
+  /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
+
+export { BASE_URL, re };
