@@ -95,6 +95,8 @@ function App() {
       });
   }
 
+  //try to transfer functions to add or remove movies
+
   return (
     <LoggedStateContext.Provider
       value={{
