@@ -13,8 +13,9 @@ export const MoviesCard = ({
   const [time, setTime] = useState("");
   const [active, setActive] = useState(false);
 
+  console.log(active);
+
   function setActiveButton() {
-    //setActive(!active);
     if (active) {
       setActive(false);
       handleDeleteMovie(film);
@@ -57,6 +58,8 @@ export const MoviesCard = ({
     }
   }, []);
 
+  console.log(type);
+
   return (
     <div className="moviesCard">
       <div className="moviesCard__img-container">
@@ -75,9 +78,11 @@ export const MoviesCard = ({
             onClick={setActiveButton}
             type="button"
             className={
-              active
+              type == "saved"
+                ? "moviesCard__button-close"
+                : active
                 ? "moviesCard__button moviesCard__button_active"
-                : "moviesCard__button "
+                : "moviesCard__button"
             }
           />
         </div>
@@ -85,6 +90,20 @@ export const MoviesCard = ({
     </div>
   );
 };
+
+// className={
+//   pageType == "saved"
+//     ? "moviesCard__button-close"
+//     : active
+//     ? "moviesCard__button moviesCard__button_active"
+//     : "moviesCard__button"
+// }
+
+// className={
+//   active
+//     ? "moviesCard__button moviesCard__button_active"
+//     : "moviesCard__button"
+// }
 
 // className={
 //   pageType == "saved"

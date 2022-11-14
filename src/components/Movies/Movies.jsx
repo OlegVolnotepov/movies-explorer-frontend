@@ -34,6 +34,7 @@ export const Movies = () => {
   const [isShortFilm, setIsShortFilm] = useState(false);
   const [allFilms, setAllFilms] = useState([]); //?наверное это все найденные фильмы
   const [isLiked, setIsLiked] = useState(undefined);
+  const [temp, setTemp] = useState(1); // тригер для вызова обновления фильмов
 
   //до этого было const allfilms, небыло юзстейта. Сделал для того что бы обновлять лайк
   //let allFilms = JSON.parse(localStorage.getItem("films")) || [];
@@ -77,7 +78,6 @@ export const Movies = () => {
   }
 
   function findMovies(movies) {
-    console.log(movies);
     const searchRequest = localStorage.getItem("requset").toLocaleLowerCase();
     films.length = 0;
 
@@ -131,18 +131,8 @@ export const Movies = () => {
       localStorage.setItem("short", true);
       setIsShortFilm(!isShortFilm);
     }
-    //localStorage.setItem("short", true);
-    //setIsShortFilm(!isShortFilm);
   }
 
-  //фильтруем Короткометражки
-  // useEffect(() => {
-  //   if (isShortFilm) {
-  //     loadFilms(allFilmsShort);
-  //   } else {
-  //     loadFilms(allFilms);
-  //   }
-  // }, [isShortFilm]);
   useEffect(() => {
     if (localStorage.getItem("short") == "true") {
       loadFilms(allFilmsShort);
@@ -175,9 +165,10 @@ export const Movies = () => {
     }
   }
 
+  //финальныя загрузка всех отображаемых фильмов
   useEffect(() => {
     loadFilms(allFilms);
-  }, [filmsCount, preloading, filmsLength]);
+  }, [filmsCount, preloading, filmsLength, temp]);
 
   //Показ кнопки
   React.useEffect(() => {
@@ -198,34 +189,6 @@ export const Movies = () => {
     }
   }, [films.length, filmsLength]);
 
-  //todo Лайк: проверка и уставнока
-  // useEffect(() => {
-  //   api
-  //     .getMovies()
-  //     .then((response) => {
-  //       //console.log(response);
-  //       setIsLiked(response.some((i) => i.id === films.movieId));
-
-  //       //todo нужно обновить локал сторадж и алл филмс массив на основе данных с сервера
-  //       let updatedArray = JSON.parse(localStorage.getItem("films")).map(
-  //         (item) => {
-  //           if (item.id == response.movieId) {
-  //             item._id = response._id;
-  //             item.owner = response.owner;
-  //             item.like = true;
-  //           }
-  //           return item;
-  //         }
-  //       );
-
-  //       //films.isLiked = isLiked;
-  //       //console.log(updatedArray);
-  //     })
-  //     .catch((err) => {
-  //       console.log(`Ошибка: ${err}`);
-  //     });
-  // }, []);
-
   //todo это будет функция именно добавления на сервер, а часть с изменением локалсторадж вынести в юзэффект
   function handleAddMovie(film) {
     api
@@ -239,22 +202,36 @@ export const Movies = () => {
             item.owner = response.owner;
           }
         });
-        //console.log(updatedArray);
         localStorage.removeItem("films");
         localStorage.setItem("films", JSON.stringify(updatedArray));
+        handleSetAllFilms(updatedArray);
+        setTemp((prev) => prev + 1);
       })
       .catch((err) => {
         console.log(`Ошибка: ${err}`);
       });
   }
 
+  function handleSetAllFilms(data) {
+    setAllFilms([]);
+    setAllFilms(data);
+  }
+
   function handleDeleteMovie(film) {
-    console.log("handleDeleteMovie");
-    console.log(film);
     api
       .deleteMovie(film._id)
-      .then((res) => {
-        console.log(res);
+      .then((response) => {
+        let updatedArray = JSON.parse(localStorage.getItem("films"));
+        updatedArray.forEach((item) => {
+          if (item._id == film._id) {
+            delete item._id;
+            delete item.owner;
+          }
+        });
+        localStorage.removeItem("films");
+        localStorage.setItem("films", JSON.stringify(updatedArray));
+        handleSetAllFilms(updatedArray);
+        setTemp((prev) => prev + 1);
       })
       .catch((err) => {
         console.log(`Ошибка: ${err}`);
@@ -275,18 +252,36 @@ export const Movies = () => {
           localStorage.removeItem("films");
           localStorage.setItem("films", JSON.stringify(updatedArray));
         } else {
-          const tempArrIds = [];
-          res.forEach((item) => tempArrIds.push(item._id));
+          //здесь удаяются лишние фильмы(если в ЛС содержится _id, которого нет на серваке, то его удаляем)
           updatedArray.forEach((item) => {
             if (item._id) {
-              if (!tempArrIds.includes(item._id)) {
-                delete item._id;
-                delete item._owner;
-              }
+              delete item._id;
+              delete item._owner;
             }
           });
+
+          //todo нужно соеденить res и updatedArray.
+
+          //рабочая но не понятная схема
+          // const output = updatedArray.map((e) =>
+          //   res.some(({ nameRU }) => nameRU == e.nameRU)
+          //     ? { ...e, ...res.find(({ nameRU }) => nameRU == e.nameRU) }
+          //     : e
+          // );
+
+          const output = updatedArray.map((element) => {
+            const newEl = res.filter((e) => e.nameRU === element.nameRU);
+            if (newEl[0] != undefined) {
+              element._id = newEl[0]._id;
+              element.owner = newEl[0].owner;
+              return element;
+            } else {
+              return element;
+            }
+          });
+
           localStorage.removeItem("films");
-          localStorage.setItem("films", JSON.stringify(updatedArray));
+          localStorage.setItem("films", JSON.stringify(output));
         }
       })
       .catch((err) => {
@@ -297,7 +292,7 @@ export const Movies = () => {
   //todo тестирую обновление массива фильмов
   useEffect(() => {
     updateLocalStorage();
-  }, [films]);
+  }, []);
 
   //todo нужен юзэффект, если фильм добавлен, что бы отприсовывать лайк
 

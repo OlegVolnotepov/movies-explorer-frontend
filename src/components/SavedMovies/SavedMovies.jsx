@@ -52,6 +52,7 @@ export const SavedMovies = () => {
         anotherResult=""
         isSaved={true}
         preloading={preloading}
+        handleDeleteMovie={handleDeleteMovie}
       />
     </section>
   );
