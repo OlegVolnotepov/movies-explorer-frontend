@@ -7,3 +7,5 @@ https://disk.yandex.ru/d/IpHQDt4V_nl9OA
 ip server: 178.154.206.68
 api: https://api.voleg.nomorepartiesxyz.ru/movies/
 front: https://voleg.nomorepartiesxyz.ru/
+
+pull-request: https://github.com/OlegVolnotepov/movies-explorer-frontend/pull/2
