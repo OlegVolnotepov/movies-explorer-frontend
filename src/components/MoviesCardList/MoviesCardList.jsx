@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import { MoviesCard } from "../MoviesCard/MoviesCard";
 import "./moviesCardList.css";
 import { Preloader } from "../Preloader/Preloader";
 import { AnotherResult } from "../AnotherResult/AnotherResult";
 import { MoreButton } from "../MoreButton/MoreButton";
 import { BASE_URL } from "../../utils/constants";
+import { useEffect } from "react";
 
 export const MoviesCardList = ({
   type,

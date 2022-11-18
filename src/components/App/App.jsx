@@ -24,6 +24,8 @@ function App() {
   const [isLogged, setIsLogged] = useState(true); //todo в телеге есть статья с прелоадером
   const [userName, setUserName] = useState("");
   const [userEmail, setUserEmail] = useState("");
+  const [preloading, setPreloading] = useState(false);
+  const [profileMessage, setProfileMessage] = useState("");
 
   const handleRegister = (data) => {
     const { email, password, name } = data;
@@ -82,16 +84,24 @@ function App() {
   }
 
   function handleChangeProfile(newName, newEmail) {
+    setPreloading(true);
     api
       .updateUser(newName, newEmail)
       .then((res) => {
         console.log(res);
         setUserName(res.name);
         setUserEmail(res.email);
+        setProfileMessage("Данные обновлены");
       })
       .catch((err) => {
         console.log(`Ошибка: ${err}`);
-        setIsLogged(false);
+        setProfileMessage(`Ошибка: ${err}`);
+      })
+      .finally(() => {
+        setPreloading(false);
+        setTimeout(() => {
+          setProfileMessage("");
+        }, 2000);
       });
   }
 
@@ -112,7 +122,14 @@ function App() {
         <Routes>
           <Route path="/" element={<Layout />}>
             <Route index element={<Main />} />
-            <Route path="/movies" element={<Movies />} />
+            <Route
+              path="/movies"
+              element={
+                <ProtectedRoute>
+                  <Movies />
+                </ProtectedRoute>
+              }
+            />
             <Route
               path="/signup"
               element={<Register handleRegister={handleRegister} />}
@@ -121,7 +138,14 @@ function App() {
               path="/signin"
               element={<Login handleLogin={handleLogin} />}
             />
-            <Route path="/saved-movies" element={<SavedMovies />} />
+            <Route
+              path="/saved-movies"
+              element={
+                <ProtectedRoute>
+                  <SavedMovies />
+                </ProtectedRoute>
+              }
+            />
             <Route
               path="/profile"
               element={
@@ -129,6 +153,8 @@ function App() {
                   <Profile
                     handleSignout={handleSignout}
                     handleChangeProfile={handleChangeProfile}
+                    preloading={preloading}
+                    profileMessage={profileMessage}
                   />
                 </ProtectedRoute>
               }

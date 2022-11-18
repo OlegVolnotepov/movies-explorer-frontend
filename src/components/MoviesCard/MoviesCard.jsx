@@ -13,14 +13,11 @@ export const MoviesCard = ({
   const [time, setTime] = useState("");
   const [active, setActive] = useState(false);
 
-  console.log(active);
-
   function setActiveButton() {
     if (active) {
       setActive(false);
       handleDeleteMovie(film);
     } else {
-      console.log("activate");
       setActive(true);
       handleAddMovie(film);
     }
@@ -50,15 +47,15 @@ export const MoviesCard = ({
     setTime(time);
   }
 
-  useEffect(() => getTimeFromMins(duration), []);
+  useEffect(() => getTimeFromMins(duration), [film]);
 
   useEffect(() => {
-    if (_id) {
+    if (_id !== undefined) {
       setActive(true);
+    } else {
+      setActive(false);
     }
-  }, []);
-
-  console.log(type);
+  }, [_id]);
 
   return (
     <div className="moviesCard">

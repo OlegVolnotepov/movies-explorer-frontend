@@ -8,15 +8,16 @@ import { useEffect } from "react";
 
 export const SavedMovies = () => {
   const isLogged = React.useContext(LoggedStateContext);
-  const [films1, setFilms1] = useState([]);
   const [films, setFilms] = useState([]);
   const [preloading, setPreloading] = useState(false);
+  const [anotherResult, setAnotherResult] = useState("");
+  const [isShortFilm, setIsShortFilm] = useState(false);
+  const [shortFilms, setShortFilms] = useState([]);
 
   function fetchFilms() {
     api
       .getMovies()
       .then((res) => {
-        console.log(res);
         setFilms(res);
       })
       .catch((err) => {
@@ -30,6 +31,12 @@ export const SavedMovies = () => {
       .getMovies()
       .then((res) => {
         setFilms(res);
+
+        if (res.length && res.length > 0) {
+          setAnotherResult("");
+        } else {
+          setAnotherResult("savedPage");
+        }
       })
       .catch((err) => {
         console.log(`Ошибка: ${err}`);
@@ -39,17 +46,90 @@ export const SavedMovies = () => {
       });
   }, []);
 
+  function handleDeleteMovie(film) {
+    setPreloading(true);
+    api
+      .deleteMovie(film._id)
+      .then((res) => {
+        films.map((item, index) => {
+          //const newEl = res.filter((e) => e._id === item._id);
+          if (res._id == item._id) {
+            films.splice(index, 1);
+          }
+        });
+      })
+      .catch((err) => {
+        console.log(`Ошибка: ${err}`);
+      })
+      .finally(() => {
+        setPreloading(false);
+      });
+  }
+
+  function searchFilms(requset) {
+    films.map((item) => {
+      if (item.nameRU.toLowerCase().includes(requset.toLowerCase())) {
+        setFilms([]);
+        setFilms([item]);
+      }
+    });
+  }
+
+  function handleChangeShortFilms() {
+    if (localStorage.getItem("short") == "true") {
+      localStorage.setItem("short", false);
+      setIsShortFilm(!isShortFilm);
+    } else {
+      localStorage.setItem("short", true);
+      setIsShortFilm(!isShortFilm);
+    }
+  }
+
+  //создаем массив короткометражек
   useEffect(() => {
-    setFilms(films);
+    setShortFilms(films.filter((item) => item.duration < 41));
   }, [films]);
+
+  useEffect(() => {
+    const localStateIsShort = localStorage.getItem("short") === "true";
+    setIsShortFilm(localStateIsShort);
+
+    if (isShortFilm) {
+      setFilms([]);
+      setFilms(shortFilms);
+    } else {
+      setPreloading(true);
+      api
+        .getMovies()
+        .then((res) => {
+          setFilms(res);
+
+          if (res.length && res.length > 0) {
+            setAnotherResult("");
+          } else {
+            setAnotherResult("savedPage");
+          }
+        })
+        .catch((err) => {
+          console.log(`Ошибка: ${err}`);
+        })
+        .finally(() => {
+          setPreloading(false);
+        });
+    }
+  }, [isShortFilm]);
 
   return (
     <section className="savedMovies">
-      <SearchForm />
+      <SearchForm
+        path={"saved"}
+        handleChangeShortFilms={handleChangeShortFilms}
+        searchFilms={searchFilms}
+      />
       <MoviesCardList
         films={films}
         type="saved"
-        anotherResult=""
+        anotherResult={anotherResult}
         isSaved={true}
         preloading={preloading}
         handleDeleteMovie={handleDeleteMovie}

@@ -5,12 +5,19 @@ import { LoggedStateContext } from "../../contexts/LoggedStateContext";
 import { re } from "../../utils/constants";
 import { useForm } from "react-hook-form";
 import { useEffect } from "react";
+import { Preloader } from "../Preloader/Preloader";
 
-export const Profile = ({ handleSignout, handleChangeProfile }) => {
+export const Profile = ({
+  handleSignout,
+  handleChangeProfile,
+  preloading,
+  profileMessage,
+}) => {
   const { userName, userEmail } = React.useContext(LoggedStateContext);
   const [newName, setNewName] = useState("");
   const [newEmail, setNewEmail] = useState("");
   const [submitActive, setSubmitActive] = useState(false);
+  const [css, setCss] = useState("profile__message");
 
   function handleChangeName(evt) {
     setNewName(evt.target.value);
@@ -46,6 +53,14 @@ export const Profile = ({ handleSignout, handleChangeProfile }) => {
     }
   }, [newEmail, newName, userEmail, userName]);
 
+  useEffect(() => {
+    if (profileMessage == "Данные обновлены") {
+      setCss("profile__message animated");
+    } else {
+      setCss("profile__message");
+    }
+  }, [profileMessage]);
+
   return (
     <section className="profile">
       <h1 className="profile__title">Привет, {userName}</h1>
@@ -75,17 +90,22 @@ export const Profile = ({ handleSignout, handleChangeProfile }) => {
             defaultValue={userEmail}
           />
         </div>
-        <button
-          className={
-            !submitActive
-              ? "profile__btn profile__btn_disabled"
-              : "profile__btn"
-          }
-          disabled={!submitActive}
-          type="submit"
-        >
-          Редактировать
-        </button>
+        <div className={css}>{profileMessage}</div>
+        {preloading ? (
+          <Preloader />
+        ) : (
+          <button
+            className={
+              !submitActive
+                ? "profile__btn profile__btn_disabled"
+                : "profile__btn"
+            }
+            disabled={!submitActive}
+            type="submit"
+          >
+            Редактировать
+          </button>
+        )}
         <Link to="/" className="profile__logout" onClick={handleSignout}>
           Выйти из аккаунта
         </Link>

@@ -165,11 +165,6 @@ export const Movies = () => {
     }
   }
 
-  //финальныя загрузка всех отображаемых фильмов
-  useEffect(() => {
-    loadFilms(allFilms);
-  }, [filmsCount, preloading, filmsLength, temp]);
-
   //Показ кнопки
   React.useEffect(() => {
     if (isShortFilm) {
@@ -189,12 +184,10 @@ export const Movies = () => {
     }
   }, [films.length, filmsLength]);
 
-  //todo это будет функция именно добавления на сервер, а часть с изменением локалсторадж вынести в юзэффект
   function handleAddMovie(film) {
     api
       .addMovie(film)
       .then((response) => {
-        //todo наверное надо здесь менять стейт allFilms для установки лайка
         let updatedArray = JSON.parse(localStorage.getItem("films"));
         updatedArray.forEach((item) => {
           if (item.id == film.movieId) {
@@ -251,6 +244,8 @@ export const Movies = () => {
           });
           localStorage.removeItem("films");
           localStorage.setItem("films", JSON.stringify(updatedArray));
+          handleSetAllFilms(updatedArray);
+          setTemp((prev) => prev + 1);
         } else {
           //здесь удаяются лишние фильмы(если в ЛС содержится _id, которого нет на серваке, то его удаляем)
           updatedArray.forEach((item) => {
@@ -259,9 +254,6 @@ export const Movies = () => {
               delete item._owner;
             }
           });
-
-          //todo нужно соеденить res и updatedArray.
-
           //рабочая но не понятная схема
           // const output = updatedArray.map((e) =>
           //   res.some(({ nameRU }) => nameRU == e.nameRU)
@@ -282,6 +274,8 @@ export const Movies = () => {
 
           localStorage.removeItem("films");
           localStorage.setItem("films", JSON.stringify(output));
+          handleSetAllFilms(output);
+          setTemp((prev) => prev + 1);
         }
       })
       .catch((err) => {
@@ -293,6 +287,11 @@ export const Movies = () => {
   useEffect(() => {
     updateLocalStorage();
   }, []);
+
+  //финальныя загрузка всех отображаемых фильмов
+  useEffect(() => {
+    loadFilms(allFilms);
+  }, [filmsCount, preloading, filmsLength, temp]);
 
   //todo нужен юзэффект, если фильм добавлен, что бы отприсовывать лайк
 

@@ -5,7 +5,12 @@ import { useState } from "react";
 import { useEffect } from "react";
 import { Switch } from "../Switch/Switch.jsx";
 
-export const SearchForm = ({ getMovies, handleChangeShortFilms }) => {
+export const SearchForm = ({
+  getMovies,
+  handleChangeShortFilms,
+  searchFilms,
+  path,
+}) => {
   const [searchValue, setSearchValue] = useState("");
   const [screenWidth, setScreenWidth] = useState(window.screen.width);
   const [isCheked, setIsCheked] = useState("");
@@ -20,7 +25,11 @@ export const SearchForm = ({ getMovies, handleChangeShortFilms }) => {
 
   function submitForm(event) {
     event.preventDefault();
-    getMovies(searchValue);
+    if (path) {
+      searchFilms(searchValue);
+    } else {
+      getMovies(searchValue);
+    }
   }
 
   function handleCheck() {

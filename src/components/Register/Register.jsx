@@ -11,7 +11,7 @@ export const Register = ({ handleRegister }) => {
     formState: { errors, isValid },
     handleSubmit,
     reset,
-  } = useForm({ mode: "onChange" });
+  } = useForm({ mode: "onBlur" });
 
   const onSubmit = (data) => {
     handleRegister(data);
@@ -35,6 +35,11 @@ export const Register = ({ handleRegister }) => {
             className="register__input"
             {...register("name", {
               required: "Укажите имя",
+              pattern: {
+                value: /[a-zа-яё ]/iu,
+                message:
+                  "Имя должно содержать только латиницу, кириллицу, пробел или дефис",
+              },
             })}
           />
           {errors.name && (
