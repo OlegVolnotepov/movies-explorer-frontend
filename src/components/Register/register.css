@@ -103,6 +103,15 @@
   border: 0;
 }
 
+.profile__message {
+  font-style: normal;
+  font-weight: 500;
+  font-size: 11px;
+  line-height: 13px;
+  text-align: center;
+  margin-top: 20px;
+}
+
 .register__submit_disabled {
   background: #7e8187;
 }
@@ -167,4 +176,27 @@
     font-size: 12px;
     line-height: 15px;
   }
+}
+
+.profile__message {
+  font-style: normal;
+  font-weight: 500;
+  font-size: 11px;
+  line-height: 13px;
+  text-align: center;
+  margin-top: 20px;
+}
+
+@keyframes go-left-right {
+  /* назовём анимацию: "go-left-right" */
+  from {
+    opacity: 1; /* от: left: 0px */
+  }
+  to {
+    opacity: 0; /* до: left: 100%-50px */
+  }
+}
+
+.animated {
+  animation: go-left-right 4s;
 }

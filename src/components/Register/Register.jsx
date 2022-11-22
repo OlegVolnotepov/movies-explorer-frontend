@@ -1,22 +1,42 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./register.css";
+import { useNavigate } from "react-router-dom";
 import logoImg from "../../images/logo.svg";
 import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { re } from "../../utils/constants";
+import { LoggedStateContext } from "../../contexts/LoggedStateContext";
+import { Preloader } from "../Preloader/Preloader";
 
-export const Register = ({ handleRegister }) => {
+export const Register = ({ handleRegister, preloading, registerMessage }) => {
   const {
     register,
     formState: { errors, isValid },
     handleSubmit,
     reset,
-  } = useForm({ mode: "onBlur" });
+  } = useForm({ mode: "all" });
+  const { isLogged } = React.useContext(LoggedStateContext);
+  const [css, setCss] = useState("profile__message");
+  let navigate = useNavigate();
+
+  useEffect(() => {
+    if (isLogged) {
+      navigate("/movies");
+    }
+  }, []);
 
   const onSubmit = (data) => {
     handleRegister(data);
     reset();
   };
+
+  useEffect(() => {
+    if (registerMessage.includes("Ошибка")) {
+      setCss("profile__message animated");
+    } else {
+      setCss("profile__message");
+    }
+  }, [registerMessage]);
 
   return (
     <section className="register">
@@ -80,21 +100,26 @@ export const Register = ({ handleRegister }) => {
             <span className="register__error">{errors.password.message}</span>
           )}
         </label>
-        <button
-          disabled={!isValid}
-          className={
-            !isValid
-              ? "register__submit register__submit_disabled"
-              : "register__submit"
-          }
-          type="submit"
-        >
-          Зарегистрироваться
-        </button>
+        <div className={css}>{registerMessage}</div>
+        {preloading ? (
+          <Preloader />
+        ) : (
+          <button
+            disabled={!isValid}
+            className={
+              !isValid
+                ? "register__submit register__submit_disabled"
+                : "register__submit"
+            }
+            type="submit"
+          >
+            Зарегистрироваться
+          </button>
+        )}
       </form>
       <div className="register__question-block">
         <p className="register__question-text">Уже зарегистрированы?&nbsp;</p>
-        <Link className="register__login" to="/login">
+        <Link className="register__login" to="/signin">
           Войти
         </Link>
       </div>

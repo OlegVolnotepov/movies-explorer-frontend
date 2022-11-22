@@ -13,6 +13,7 @@ export const SavedMovies = () => {
   const [anotherResult, setAnotherResult] = useState("");
   const [isShortFilm, setIsShortFilm] = useState(false);
   const [shortFilms, setShortFilms] = useState([]);
+  const [filmsStorage, setFilmsStorage] = useState([]); // все загруженные фильмы
 
   function fetchFilms() {
     api
@@ -31,6 +32,7 @@ export const SavedMovies = () => {
       .getMovies()
       .then((res) => {
         setFilms(res);
+        setFilmsStorage(res);
 
         if (res.length && res.length > 0) {
           setAnotherResult("");
@@ -67,9 +69,8 @@ export const SavedMovies = () => {
   }
 
   function searchFilms(requset) {
-    films.map((item) => {
+    filmsStorage.map((item) => {
       if (item.nameRU.toLowerCase().includes(requset.toLowerCase())) {
-        setFilms([]);
         setFilms([item]);
       }
     });
@@ -87,7 +88,9 @@ export const SavedMovies = () => {
 
   //создаем массив короткометражек
   useEffect(() => {
-    setShortFilms(films.filter((item) => item.duration < 41));
+    if (films.length > 0) {
+      setShortFilms(films.filter((item) => item.duration < 41));
+    }
   }, [films]);
 
   useEffect(() => {
@@ -119,12 +122,17 @@ export const SavedMovies = () => {
     }
   }, [isShortFilm]);
 
+  const handleClearSearch = () => {
+    setFilms(filmsStorage);
+  };
+
   return (
     <section className="savedMovies">
       <SearchForm
         path={"saved"}
         handleChangeShortFilms={handleChangeShortFilms}
         searchFilms={searchFilms}
+        handleClearSearch={handleClearSearch}
       />
       <MoviesCardList
         films={films}

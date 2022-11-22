@@ -1,5 +1,11 @@
 import "./App.css";
-import { Route, Routes, Navigate, useNavigate } from "react-router-dom";
+import {
+  Route,
+  Routes,
+  Navigate,
+  useNavigate,
+  useLocation,
+} from "react-router-dom";
 import { Layout } from "../Layout/Layout";
 import Main from "../Main/Main";
 import { Movies } from "../Movies/Movies";
@@ -16,27 +22,48 @@ import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
 
 function App() {
   let navigate = useNavigate();
+
   useEffect(() => {
     checkResponse();
-    //console.log("checkResponse");
   }, []);
 
-  const [isLogged, setIsLogged] = useState(true); //todo в телеге есть статья с прелоадером
+  const [isLogged, setIsLogged] = useState(undefined);
   const [userName, setUserName] = useState("");
   const [userEmail, setUserEmail] = useState("");
   const [preloading, setPreloading] = useState(false);
   const [profileMessage, setProfileMessage] = useState("");
+  const [registerMessage, setRegisterMessage] = useState("");
+  const [loginMessage, setLoginMessage] = useState("");
+
+  let location = useLocation();
 
   const handleRegister = (data) => {
     const { email, password, name } = data;
     register(email, password, name)
       .then((response) => {
-        localStorage.setItem("jwt", response.JWT);
-        checkResponse();
-        navigate("/movies");
+        auth(email, password)
+          .then((response) => {
+            localStorage.setItem("jwt", response.JWT);
+            checkResponse();
+          })
+          .catch((err) => {
+            setRegisterMessage(err);
+            console.log(err);
+          })
+          .finally(() => {});
       })
       .catch((err) => {
         console.log(`Ошибка: ${err}`);
+        setRegisterMessage(`Ошибка: ${err}`);
+      })
+      .finally(() => {
+        checkResponse();
+        setTimeout(() => {
+          setRegisterMessage("");
+        }, 2000);
+        setTimeout(() => {
+          navigate("/movies");
+        }, 2000);
       });
   };
 
@@ -52,6 +79,7 @@ function App() {
   function checkResponse() {
     if (localStorage.getItem("jwt")) {
       //console.log("+jwt");
+      setPreloading(true);
       checkValidityToken(localStorage.getItem("jwt"))
         .then((res) => {
           setUserEmail(res.email);
@@ -60,12 +88,19 @@ function App() {
         })
         .catch((err) => {
           console.log(`Ошибка: ${err}`);
-          setIsLogged(false);
+          handleSignout();
+        })
+        .finally(() => {
+          setPreloading(false);
         });
     } else {
       //console.log("-jwt");
       setIsLogged(false);
-      navigate("/");
+
+      if (location.pathname !== "/signin" && location.pathname !== "/signup") {
+        navigate("/");
+        console.log(location.pathname);
+      }
     }
   }
 
@@ -78,8 +113,14 @@ function App() {
         navigate("/movies");
       })
       .catch((err) => {
-        console.log(`Ошибка: ${err}`);
+        console.log(err);
         setIsLogged(false);
+        setLoginMessage(`Ошибка: ${err}`);
+      })
+      .finally(() => {
+        setTimeout(() => {
+          setLoginMessage("");
+        }, 2000);
       });
   }
 
@@ -105,8 +146,6 @@ function App() {
       });
   }
 
-  //try to transfer functions to add or remove movies
-
   return (
     <LoggedStateContext.Provider
       value={{
@@ -125,23 +164,31 @@ function App() {
             <Route
               path="/movies"
               element={
-                <ProtectedRoute>
+                <ProtectedRoute preloading={preloading}>
                   <Movies />
                 </ProtectedRoute>
               }
             />
             <Route
               path="/signup"
-              element={<Register handleRegister={handleRegister} />}
+              element={
+                <Register
+                  handleRegister={handleRegister}
+                  preloading={preloading}
+                  registerMessage={registerMessage}
+                />
+              }
             />
             <Route
               path="/signin"
-              element={<Login handleLogin={handleLogin} />}
+              element={
+                <Login handleLogin={handleLogin} loginMessage={loginMessage} />
+              }
             />
             <Route
               path="/saved-movies"
               element={
-                <ProtectedRoute>
+                <ProtectedRoute preloading={preloading}>
                   <SavedMovies />
                 </ProtectedRoute>
               }
@@ -149,7 +196,7 @@ function App() {
             <Route
               path="/profile"
               element={
-                <ProtectedRoute>
+                <ProtectedRoute preloading={preloading}>
                   <Profile
                     handleSignout={handleSignout}
                     handleChangeProfile={handleChangeProfile}
@@ -169,18 +216,3 @@ function App() {
 }
 
 export default App;
-
-{
-  /* <>
-            <div className="header__right-block">
-              <Link to="/register" className="header__register">
-                Регистрация
-              </Link>
-              <button className="header__login-btn">Войти</button>
-            </div>
-          </>
-
-<div className="header__right-block">
-<button className="header__burger-btn" onClick={openMenu} />
-</div> */
-}

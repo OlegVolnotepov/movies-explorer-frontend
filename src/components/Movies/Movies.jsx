@@ -8,14 +8,6 @@ import moviesApi from "../../utils/MoviesApi";
 import { useState } from "react";
 import api from "../../utils/Api";
 
-//todo если придет 1 или 2 фильма то криво отображаются
-//todo если подгрузил уже список фильмов и поменял разрешение, то все сбросится
-//todo в сохраненных фильмах поиск только по ним
-
-//todo юзэффект, который запрашивает фильмы и обновлет локалсторадж и аллфилмс(филмс)
-//todo логика работы с иконкой лайка и удаления
-//todo работа со траницей сохр фильмы
-
 export const Movies = () => {
   const isLogged = React.useContext(LoggedStateContext);
   const [preloading, setPreloading] = useState(false);
@@ -33,12 +25,9 @@ export const Movies = () => {
   );
   const [isShortFilm, setIsShortFilm] = useState(false);
   const [allFilms, setAllFilms] = useState([]); //?наверное это все найденные фильмы
+  const [allFilmsFromServer, setAllFilmsFromServer] = useState([]); //фильмы для первого запроса, потом поиск будет по ним
   const [isLiked, setIsLiked] = useState(undefined);
   const [temp, setTemp] = useState(1); // тригер для вызова обновления фильмов
-
-  //до этого было const allfilms, небыло юзстейта. Сделал для того что бы обновлять лайк
-  //let allFilms = JSON.parse(localStorage.getItem("films")) || [];
-
   const allFilmsShort = (
     JSON.parse(localStorage.getItem("films")) || []
   ).filter((item) => item.duration <= 40);
@@ -92,7 +81,6 @@ export const Movies = () => {
       return setAnotherResult("noResults");
     }
 
-    //setFilms(films.concat(moviesFind));
     setAllFilms(moviesFind);
 
     localStorage.removeItem("films");
@@ -106,12 +94,16 @@ export const Movies = () => {
 
   function getMovies(searchRequest) {
     setAnotherResult("");
-    setPreloading(true);
     saveSearchRequestLocal(searchRequest);
     setSearchValue(localStorage.getItem("requset"));
+    // if (allFilmsFromServer.length > 0) {
+    //   findMovies(allFilmsFromServer);
+    // } else {
+    setPreloading(true);
     moviesApi
       .getAllMovies()
       .then((data) => {
+        //setAllFilmsFromServer(data);
         findMovies(data);
       })
       .catch((err) => {
@@ -119,8 +111,10 @@ export const Movies = () => {
         console.log(`Ошибка: ${err}`);
       })
       .finally(() => {
+        updateLocalStorage();
         setPreloading(false);
       });
+    //}
   }
 
   function handleChangeShortFilms() {
@@ -169,14 +163,14 @@ export const Movies = () => {
   React.useEffect(() => {
     if (isShortFilm) {
       const allFilmsCount = allFilmsShort.length;
-      if (filmsLength < allFilmsCount) {
+      if (films.length < allFilmsCount) {
         setIsDisplayButton(true);
       } else {
         setIsDisplayButton(false);
       }
     } else {
       const allFilmsCount = allFilms.length;
-      if (filmsLength < allFilmsCount) {
+      if (films.length < allFilmsCount) {
         setIsDisplayButton(true);
       } else {
         setIsDisplayButton(false);
@@ -231,7 +225,7 @@ export const Movies = () => {
       });
   }
 
-  //функция обновления локалсторадж - так же добавить функцию добавления, если на серваке есть а в локал нет
+  //функция обновления локалсторадж
   function updateLocalStorage() {
     api
       .getMovies()
@@ -283,7 +277,6 @@ export const Movies = () => {
       });
   }
 
-  //todo тестирую обновление массива фильмов
   useEffect(() => {
     updateLocalStorage();
   }, []);
@@ -292,8 +285,6 @@ export const Movies = () => {
   useEffect(() => {
     loadFilms(allFilms);
   }, [filmsCount, preloading, filmsLength, temp]);
-
-  //todo нужен юзэффект, если фильм добавлен, что бы отприсовывать лайк
 
   return (
     <>

@@ -1,16 +1,31 @@
 import React from "react";
+import { useEffect } from "react";
 import { useLocation, Navigate } from "react-router-dom";
 import { LoggedStateContext } from "../../contexts/LoggedStateContext";
+import { Preloader } from "../Preloader/Preloader";
 
-function ProtectedRoute({ children }) {
+function ProtectedRoute({ children, preloading }) {
   const location = useLocation();
   const { isLogged } = React.useContext(LoggedStateContext);
-  //console.log(isLogged);
-  if (!isLogged) {
-    console.log("no logged");
-    return <Navigate to="/" state={{ from: location }} />;
+
+  if (isLogged === undefined) {
+    return <Preloader />;
+  } else {
+    if (!isLogged) {
+      return <Navigate to="/" state={{ from: location }} />;
+    }
+    return children;
   }
-  return children;
+
+  // console.log(preloading);
+  // if (preloading) {
+  //   return <Preloader />;
+  // } else {
+  //   if (!isLogged) {
+  //     return <Navigate to="/" state={{ from: location }} />;
+  //   }
+  //   return children;
+  // }
 }
 
 export default ProtectedRoute;

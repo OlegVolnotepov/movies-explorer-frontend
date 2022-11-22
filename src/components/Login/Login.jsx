@@ -1,22 +1,43 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "./login.css";
 import logoImg from "../../images/logo.svg";
 import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { re } from "../../utils/constants";
+import { LoggedStateContext } from "../../contexts/LoggedStateContext";
 
-export const Login = ({ handleLogin }) => {
+export const Login = ({ handleLogin, loginMessage }) => {
   const {
     register,
     formState: { errors, isValid },
     handleSubmit,
     reset,
-  } = useForm({ mode: "onChange" });
+  } = useForm({ mode: "all" });
+
+  const [css, setCss] = useState("profile__message");
+
+  const { isLogged } = React.useContext(LoggedStateContext);
+  let navigate = useNavigate();
+
+  useEffect(() => {
+    if (isLogged) {
+      navigate("/movies");
+    }
+  }, []);
 
   function onSubmit(data) {
     handleLogin(data);
     reset();
   }
+
+  useEffect(() => {
+    if (loginMessage.includes("Ошибка")) {
+      setCss("profile__message animated");
+    } else {
+      setCss("profile__message");
+    }
+  }, [loginMessage]);
 
   return (
     <section className="login">
@@ -61,6 +82,7 @@ export const Login = ({ handleLogin }) => {
             <span className="login__error">{errors.password.message}</span>
           )}
         </label>
+        <div className={css}>{loginMessage}</div>
         <button
           className={
             !isValid ? "login__submit login__submit_disabled" : "login__submit"
@@ -73,7 +95,7 @@ export const Login = ({ handleLogin }) => {
       </form>
       <div className="login__question-block">
         <p className="login__question-text">Еще не зарегистрированы?&nbsp;</p>
-        <Link className="login__login" to="/register">
+        <Link className="login__login" to="/signup">
           Зарегистрироваться
         </Link>
       </div>

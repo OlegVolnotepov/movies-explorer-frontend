@@ -10,6 +10,7 @@ export const SearchForm = ({
   handleChangeShortFilms,
   searchFilms,
   path,
+  handleClearSearch,
 }) => {
   const [searchValue, setSearchValue] = useState("");
   const [screenWidth, setScreenWidth] = useState(window.screen.width);
@@ -38,9 +39,19 @@ export const SearchForm = ({
   }
 
   useEffect(() => {
+    if (searchValue === "" && path === "saved") {
+      handleClearSearch();
+    }
+  }, [searchValue]);
+
+  useEffect(() => {
     setIsCheked(localStorage.getItem("short"));
     setValue(localStorage.getItem("short") == "true" ? true : false);
   }, [isCheked, value]);
+
+  useEffect(() => {
+    setSearchValue(localStorage.getItem("requset"));
+  }, []);
 
   window.addEventListener("resize", handleResize);
 

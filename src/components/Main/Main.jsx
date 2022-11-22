@@ -13,11 +13,11 @@ export default function Main() {
   const { isLogged } = React.useContext(LoggedStateContext);
   let navigate = useNavigate();
 
-  useEffect(() => {
-    if (isLogged) {
-      navigate("/movies");
-    }
-  }, []);
+  // useEffect(() => {
+  //   if (isLogged) {
+  //     navigate("/movies");
+  //   }
+  // }, []);
 
   return (
     <div className="main">
