@@ -1,0 +1,110 @@
+.profile {
+  color: white;
+}
+
+.profile__title {
+  font-style: normal;
+  font-weight: 500;
+  font-size: 24px;
+  line-height: 29px;
+  text-align: center;
+  margin-top: 74px;
+}
+
+.profile__form {
+  margin: 0 auto;
+  max-width: 410px;
+  width: 100%;
+  margin-top: 120px;
+  height: 400px;
+  display: flex;
+  flex-direction: column;
+}
+
+.profile__form-input {
+  font-style: normal;
+  font-weight: 400;
+  font-size: 11px;
+  line-height: 13px;
+  text-align: right;
+  border: 0;
+  outline: 0;
+  background: inherit;
+  color: white;
+}
+
+.profile__form-field {
+  border: 0;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 11px;
+  line-height: 13px;
+}
+
+.profile__form-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.profile__form-line {
+  width: 100%;
+  border-bottom: 1px solid;
+  color: #424242;
+  margin-top: 16px;
+  margin-bottom: 16px;
+}
+
+.profile__btn {
+  outline: none;
+  background-color: inherit;
+  border: 0;
+  cursor: pointer;
+  color: white;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 13px;
+  line-height: 16px;
+  width: 100%;
+  margin-top: 220px;
+}
+
+.profile__btn_disabled {
+  color: #828282;
+  cursor: default;
+}
+
+.profile__logout {
+  margin: 0;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 13px;
+  line-height: 16px;
+  text-align: center;
+  color: #ee3465;
+  text-decoration: none;
+  margin-top: 16px;
+}
+
+.profile__message {
+  font-style: normal;
+  font-weight: 500;
+  font-size: 11px;
+  line-height: 13px;
+  text-align: center;
+  margin-top: 20px;
+}
+
+@keyframes go-left-right {
+  /* назовём анимацию: "go-left-right" */
+  from {
+    opacity: 1; /* от: left: 0px */
+  }
+  to {
+    opacity: 0; /* до: left: 100%-50px */
+  }
+}
+
+.animated {
+  animation: go-left-right 4s;
+}
