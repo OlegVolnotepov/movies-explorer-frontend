@@ -1,4 +1,5 @@
-const JWT = localStorage.getItem("token");
+const JWT = localStorage.getItem("jwt");
+
 class Api {
   constructor(config) {
     this._url = config.url;
@@ -26,9 +27,17 @@ class Api {
     }).then(this._checkResponse);
   }
 
+  // getMovies() {
+  //   return fetch(`${this._url}/movies`, {
+  //     headers: this._headers,
+  //   }).then((res) => this._checkResponse(res));
+  // }
   getMovies() {
     return fetch(`${this._url}/movies`, {
-      headers: this._headers,
+      headers: {
+        authorization: `Bearer ${localStorage.getItem("jwt")}`,
+        "Content-Type": "application/json",
+      },
     }).then((res) => this._checkResponse(res));
   }
 

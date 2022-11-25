@@ -24,7 +24,7 @@ export const Login = ({ handleLogin, loginMessage }) => {
     if (isLogged) {
       navigate("/movies");
     }
-  }, []);
+  }, [isLogged, navigate]);
 
   function onSubmit(data) {
     handleLogin(data);

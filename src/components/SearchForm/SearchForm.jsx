@@ -1,4 +1,5 @@
 import React from "react";
+import { useLocation } from "react-router-dom";
 import "./searchForm.css";
 import darkSearchIcon from "../../images/darkSearchIcon.svg";
 import { useState } from "react";
@@ -11,11 +12,13 @@ export const SearchForm = ({
   searchFilms,
   path,
   handleClearSearch,
+  handleChangeShortFilmsInSaved,
 }) => {
   const [searchValue, setSearchValue] = useState("");
   const [screenWidth, setScreenWidth] = useState(window.screen.width);
-  const [isCheked, setIsCheked] = useState("");
+  const [isCheked, setIsCheked] = useState();
   const [value, setValue] = useState(false);
+  let location = useLocation();
   function handleResize() {
     setScreenWidth(window.screen.width);
   }
@@ -34,6 +37,11 @@ export const SearchForm = ({
   }
 
   function handleCheck() {
+    if (path === "saved") {
+      handleChangeShortFilmsInSaved();
+      setValue(!value);
+      return;
+    }
     handleChangeShortFilms();
     setValue(!value);
   }
@@ -45,9 +53,14 @@ export const SearchForm = ({
   }, [searchValue]);
 
   useEffect(() => {
-    setIsCheked(localStorage.getItem("short"));
-    setValue(localStorage.getItem("short") == "true" ? true : false);
-  }, [isCheked, value]);
+    if (path === "saved") {
+      setIsCheked(localStorage.getItem("shortSaved"));
+      setValue(localStorage.getItem("shortSaved") === "true" ? true : false);
+    } else {
+      setIsCheked(localStorage.getItem("short"));
+      setValue(localStorage.getItem("short") === "true" ? true : false);
+    }
+  }, [isCheked, path, value]);
 
   useEffect(() => {
     setSearchValue(localStorage.getItem("requset"));

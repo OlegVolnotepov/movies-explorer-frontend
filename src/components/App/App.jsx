@@ -23,10 +23,6 @@ import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
 function App() {
   let navigate = useNavigate();
 
-  useEffect(() => {
-    checkResponse();
-  }, []);
-
   const [isLogged, setIsLogged] = useState(undefined);
   const [userName, setUserName] = useState("");
   const [userEmail, setUserEmail] = useState("");
@@ -34,6 +30,7 @@ function App() {
   const [profileMessage, setProfileMessage] = useState("");
   const [registerMessage, setRegisterMessage] = useState("");
   const [loginMessage, setLoginMessage] = useState("");
+  const [jwtState, setJwtState] = useState("");
 
   let location = useLocation();
 
@@ -48,7 +45,6 @@ function App() {
           })
           .catch((err) => {
             setRegisterMessage(err);
-            console.log(err);
           })
           .finally(() => {});
       })
@@ -68,60 +64,14 @@ function App() {
   };
 
   function handleSignout() {
-    console.log("handleSignout");
     localStorage.removeItem("jwt");
     localStorage.removeItem("films");
     localStorage.removeItem("requset");
     localStorage.removeItem("short");
+    localStorage.removeItem("shortSaved");
+    setUserName("");
+    setUserEmail("");
     setIsLogged(false);
-  }
-
-  function checkResponse() {
-    if (localStorage.getItem("jwt")) {
-      //console.log("+jwt");
-      setPreloading(true);
-      checkValidityToken(localStorage.getItem("jwt"))
-        .then((res) => {
-          setUserEmail(res.email);
-          setUserName(res.name);
-          setIsLogged(true);
-        })
-        .catch((err) => {
-          console.log(`Ошибка: ${err}`);
-          handleSignout();
-        })
-        .finally(() => {
-          setPreloading(false);
-        });
-    } else {
-      //console.log("-jwt");
-      setIsLogged(false);
-
-      if (location.pathname !== "/signin" && location.pathname !== "/signup") {
-        navigate("/");
-        console.log(location.pathname);
-      }
-    }
-  }
-
-  function handleLogin(data) {
-    const { email, password } = data;
-    auth(email, password)
-      .then((res) => {
-        localStorage.setItem("jwt", res.JWT);
-        setIsLogged(true);
-        navigate("/movies");
-      })
-      .catch((err) => {
-        console.log(err);
-        setIsLogged(false);
-        setLoginMessage(`Ошибка: ${err}`);
-      })
-      .finally(() => {
-        setTimeout(() => {
-          setLoginMessage("");
-        }, 2000);
-      });
   }
 
   function handleChangeProfile(newName, newEmail) {
@@ -129,7 +79,6 @@ function App() {
     api
       .updateUser(newName, newEmail)
       .then((res) => {
-        console.log(res);
         setUserName(res.name);
         setUserEmail(res.email);
         setProfileMessage("Данные обновлены");
@@ -146,6 +95,58 @@ function App() {
       });
   }
 
+  function handleLogin(data) {
+    const { email, password } = data;
+    auth(email, password)
+      .then((res) => {
+        localStorage.setItem("jwt", res.JWT);
+        setJwtState("res.JWT");
+        setIsLogged(true);
+        setTimeout(() => {
+          navigate("/movies");
+        }, 1000);
+      })
+      .catch((err) => {
+        setIsLogged(false);
+        setLoginMessage(`Ошибка: ${err}`);
+      })
+      .finally(() => {
+        setTimeout(() => {
+          setLoginMessage("");
+        }, 2000);
+      });
+  }
+
+  function checkResponse() {
+    if (localStorage.getItem("jwt")) {
+      setPreloading(true);
+      checkValidityToken(localStorage.getItem("jwt"))
+        .then((res) => {
+          setUserEmail(res.email);
+          setUserName(res.name);
+          setIsLogged(true);
+        })
+        .catch((err) => {
+          console.log(`Ошибка: ${err}`);
+          handleSignout();
+        })
+        .finally(() => {
+          setPreloading(false);
+        });
+    } else {
+      setIsLogged(false);
+      handleSignout();
+
+      if (location.pathname !== "/signin" && location.pathname !== "/signup") {
+        navigate("/");
+      }
+    }
+  }
+
+  useEffect(() => {
+    checkResponse();
+  }, []);
+
   return (
     <LoggedStateContext.Provider
       value={{
@@ -155,6 +156,8 @@ function App() {
         setUserName,
         userEmail,
         setUserEmail,
+        jwtState,
+        setJwtState,
       }}
     >
       <div className="App">
@@ -165,7 +168,7 @@ function App() {
               path="/movies"
               element={
                 <ProtectedRoute preloading={preloading}>
-                  <Movies />
+                  <Movies checkResponse={checkResponse} />
                 </ProtectedRoute>
               }
             />
@@ -189,7 +192,7 @@ function App() {
               path="/saved-movies"
               element={
                 <ProtectedRoute preloading={preloading}>
-                  <SavedMovies />
+                  <SavedMovies checkResponse={checkResponse} />
                 </ProtectedRoute>
               }
             />

@@ -5,7 +5,7 @@ import logoPath from "../../images/logo.svg";
 import accIcon from "../../images/accIcon.svg";
 import { LoggedStateContext } from "../../contexts/LoggedStateContext";
 import { MenuPopup } from "../MenuPopup/MenuPopup";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 export const Header = () => {
   const isLogged = React.useContext(LoggedStateContext);

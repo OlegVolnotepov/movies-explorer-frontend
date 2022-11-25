@@ -6,7 +6,7 @@ import { LoggedStateContext } from "../../contexts/LoggedStateContext";
 import api from "../../utils/Api";
 import { useEffect } from "react";
 
-export const SavedMovies = () => {
+export const SavedMovies = ({ checkResponse }) => {
   const isLogged = React.useContext(LoggedStateContext);
   const [films, setFilms] = useState([]);
   const [preloading, setPreloading] = useState(false);
@@ -15,38 +15,9 @@ export const SavedMovies = () => {
   const [shortFilms, setShortFilms] = useState([]);
   const [filmsStorage, setFilmsStorage] = useState([]); // все загруженные фильмы
 
-  function fetchFilms() {
-    api
-      .getMovies()
-      .then((res) => {
-        setFilms(res);
-      })
-      .catch((err) => {
-        console.log(`Ошибка: ${err}`);
-      });
-  }
-
-  useEffect(() => {
-    setPreloading(true);
-    api
-      .getMovies()
-      .then((res) => {
-        setFilms(res);
-        setFilmsStorage(res);
-
-        if (res.length && res.length > 0) {
-          setAnotherResult("");
-        } else {
-          setAnotherResult("savedPage");
-        }
-      })
-      .catch((err) => {
-        console.log(`Ошибка: ${err}`);
-      })
-      .finally(() => {
-        setPreloading(false);
-      });
-  }, []);
+  const handleClearSearch = () => {
+    setFilms(filmsStorage);
+  };
 
   function handleDeleteMovie(film) {
     setPreloading(true);
@@ -76,61 +47,66 @@ export const SavedMovies = () => {
     });
   }
 
-  function handleChangeShortFilms() {
-    if (localStorage.getItem("short") == "true") {
-      localStorage.setItem("short", false);
+  function handleChangeShortFilmsInSaved() {
+    if (localStorage.getItem("shortSaved") === "true") {
+      localStorage.setItem("shortSaved", false);
       setIsShortFilm(!isShortFilm);
     } else {
-      localStorage.setItem("short", true);
+      localStorage.setItem("shortSaved", true);
       setIsShortFilm(!isShortFilm);
     }
   }
 
-  //создаем массив короткометражек
   useEffect(() => {
-    if (films.length > 0) {
-      setShortFilms(films.filter((item) => item.duration < 41));
+    setPreloading(true);
+    api
+      .getMovies()
+      .then((res) => {
+        setFilmsStorage(res);
+        if (films.length > 0) {
+          setShortFilms(res.filter((item) => item.duration < 41));
+        }
+        if (res.length && res.length > 0) {
+          setAnotherResult("");
+        } else {
+          setAnotherResult("savedPage");
+        }
+      })
+      .catch((err) => {
+        console.log(`Ошибка: ${err}`);
+      })
+      .finally(() => {
+        setPreloading(false);
+      });
+  }, []);
+
+  useEffect(() => {
+    if (filmsStorage.length > 0) {
+      setShortFilms(filmsStorage.filter((item) => item.duration < 41));
     }
-  }, [films]);
+  }, [filmsStorage]);
 
   useEffect(() => {
-    const localStateIsShort = localStorage.getItem("short") === "true";
-    setIsShortFilm(localStateIsShort);
+    if (localStorage.getItem("shortSaved") === "true") {
+      setIsShortFilm(true);
+    } else {
+      setIsShortFilm(false);
+    }
+  });
 
+  useEffect(() => {
     if (isShortFilm) {
-      setFilms([]);
       setFilms(shortFilms);
     } else {
-      setPreloading(true);
-      api
-        .getMovies()
-        .then((res) => {
-          setFilms(res);
-
-          if (res.length && res.length > 0) {
-            setAnotherResult("");
-          } else {
-            setAnotherResult("savedPage");
-          }
-        })
-        .catch((err) => {
-          console.log(`Ошибка: ${err}`);
-        })
-        .finally(() => {
-          setPreloading(false);
-        });
+      setFilms(filmsStorage);
     }
-  }, [isShortFilm]);
-
-  const handleClearSearch = () => {
-    setFilms(filmsStorage);
-  };
+  }, [filmsStorage, isShortFilm, shortFilms]);
 
   return (
     <section className="savedMovies">
       <SearchForm
         path={"saved"}
-        handleChangeShortFilms={handleChangeShortFilms}
+        handleChangeShortFilmsInSaved={handleChangeShortFilmsInSaved}
         searchFilms={searchFilms}
         handleClearSearch={handleClearSearch}
       />

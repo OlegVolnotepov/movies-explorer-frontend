@@ -23,7 +23,7 @@ export const Register = ({ handleRegister, preloading, registerMessage }) => {
     if (isLogged) {
       navigate("/movies");
     }
-  }, []);
+  }, [isLogged, navigate]);
 
   const onSubmit = (data) => {
     handleRegister(data);

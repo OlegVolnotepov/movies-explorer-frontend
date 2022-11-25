@@ -16,16 +16,6 @@ function ProtectedRoute({ children, preloading }) {
     }
     return children;
   }
-
-  // console.log(preloading);
-  // if (preloading) {
-  //   return <Preloader />;
-  // } else {
-  //   if (!isLogged) {
-  //     return <Navigate to="/" state={{ from: location }} />;
-  //   }
-  //   return children;
-  // }
 }
 
 export default ProtectedRoute;

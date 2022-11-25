@@ -8,7 +8,7 @@ import moviesApi from "../../utils/MoviesApi";
 import { useState } from "react";
 import api from "../../utils/Api";
 
-export const Movies = () => {
+export const Movies = ({ checkResponse }) => {
   const isLogged = React.useContext(LoggedStateContext);
   const [preloading, setPreloading] = useState(false);
   const [searchValue, setSearchValue] = useState("");
@@ -70,7 +70,6 @@ export const Movies = () => {
     const searchRequest = localStorage.getItem("requset").toLocaleLowerCase();
     films.length = 0;
 
-    //переписываю на ру поиск только, т.к не ищет норм
     const moviesFind = movies.filter(({ nameRU, nameEN }) =>
       [nameRU, nameEN].some((name) =>
         name.toLocaleLowerCase().includes(searchRequest)
@@ -96,14 +95,10 @@ export const Movies = () => {
     setAnotherResult("");
     saveSearchRequestLocal(searchRequest);
     setSearchValue(localStorage.getItem("requset"));
-    // if (allFilmsFromServer.length > 0) {
-    //   findMovies(allFilmsFromServer);
-    // } else {
     setPreloading(true);
     moviesApi
       .getAllMovies()
       .then((data) => {
-        //setAllFilmsFromServer(data);
         findMovies(data);
       })
       .catch((err) => {
@@ -114,7 +109,6 @@ export const Movies = () => {
         updateLocalStorage();
         setPreloading(false);
       });
-    //}
   }
 
   function handleChangeShortFilms() {
@@ -130,8 +124,10 @@ export const Movies = () => {
   useEffect(() => {
     if (localStorage.getItem("short") == "true") {
       loadFilms(allFilmsShort);
+      setIsShortFilm(true);
     } else {
       loadFilms(allFilms);
+      setIsShortFilm(false);
     }
   }, [isShortFilm]);
 
@@ -176,7 +172,13 @@ export const Movies = () => {
         setIsDisplayButton(false);
       }
     }
-  }, [films.length, filmsLength]);
+  }, [
+    allFilms.length,
+    allFilmsShort.length,
+    films.length,
+    filmsLength,
+    isShortFilm,
+  ]);
 
   function handleAddMovie(film) {
     api
@@ -279,6 +281,7 @@ export const Movies = () => {
 
   useEffect(() => {
     updateLocalStorage();
+    checkResponse();
   }, []);
 
   //финальныя загрузка всех отображаемых фильмов
